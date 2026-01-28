@@ -1,0 +1,2 @@
+<?php
+//SCHOOL FEES SETINGS 

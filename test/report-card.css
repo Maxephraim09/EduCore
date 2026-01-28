@@ -1,0 +1,128 @@
+body {
+  font-family: "Arial", sans-serif;
+  background: #fff;
+  margin: 20px;
+  color: #000;
+}
+
+.report-card {
+  border: 2px solid #000;
+  padding: 20px;
+  background: #fff;
+  max-width: 900px;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+}
+
+.logo, .passport {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.school-info {
+  text-align: center;
+  flex: 1;
+}
+
+.school-info h1 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.school-info h2 {
+  font-size: 16px;
+  text-decoration: underline;
+  margin: 5px 0;
+}
+
+.student-info table, .subjects table, .grades table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.student-info td {
+  padding: 5px;
+  border: 1px solid #000;
+}
+
+.subjects th, .subjects td {
+  border: 1px solid #000;
+  padding: 4px;
+  text-align: center;
+}
+
+.subjects th {
+  background: #f0f0f0;
+}
+
+.grades {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.grades-left {
+  width: 70%;
+}
+
+.grades-left table {
+  border: 1px solid #000;
+  text-align: center;
+}
+
+.grades-left th, .grades-left td {
+  border: 1px solid #000;
+  padding: 4px;
+}
+
+.qrcode {
+  width: 25%;
+  height: 120px;
+  border: 2px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.remarks {
+  border-top: 2px solid #000;
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+.remarks p {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.right {
+  margin-left: auto;
+}
+
+@media print {
+  body {
+    margin: 0;
+  }
+  .report-card {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+}
