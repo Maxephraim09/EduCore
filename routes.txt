@@ -1,0 +1,6 @@
+
+  GET|HEAD       apply/admission-letter/{admissionNumber} application.admissi…
+  GET|HEAD       apply/admission-letter/{admissionNumber}/download applicatio…
+
+                                                            Showing [2] routes
+

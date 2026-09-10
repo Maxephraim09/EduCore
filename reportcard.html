@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Student Report Card - Academic Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .report-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Main Report Card - Optimized for A4 */
+        .report-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        /* Header Section */
+        .school-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 18px 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .school-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1%, transparent 1%);
+            background-size: 50px 50px;
+            animation: shimmer 20s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .school-logo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .logo-icon i {
+            font-size: 30px;
+            color: #2a5298;
+        }
+
+        .school-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 3px;
+        }
+
+        .school-title p {
+            font-size: 9px;
+            opacity: 0.9;
+        }
+
+        .academic-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 15px;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .academic-badge .label {
+            font-size: 9px;
+            opacity: 0.8;
+        }
+
+        .academic-badge .value {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        /* Student Profile Section */
+        .student-profile {
+            padding: 15px 25px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .student-photo {
+            text-align: center;
+        }
+
+        .photo-frame {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .photo-frame i {
+            font-size: 45px;
+            color: white;
+        }
+
+        .photo-placeholder {
+            font-size: 9px;
+            color: #64748b;
+        }
+
+        .student-info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .info-field {
+            background: white;
+            padding: 8px 10px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .info-field .label {
+            font-size: 8px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+
+        .info-field .value {
+            font-size: 11px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        /* Key Section */
+        .key-section {
+            padding: 8px 25px;
+            background: #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .grading-key {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .key-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .key-color {
+            width: 20px;
+            height: 10px;
+            border-radius: 3px;
+        }
+
+        .key-color.A { background: #10b981; }
+        .key-color.B { background: #3b82f6; }
+        .key-color.C { background: #f59e0b; }
+        .key-color.D { background: #ef4444; }
+        .key-color.F { background: #991b1b; }
+
+        .key-text {
+            font-size: 9px;
+            font-weight: 500;
+        }
+
+        /* Results Table */
+        .results-section {
+            padding: 15px 25px;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 9px;
+        }
+
+        .results-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 4px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 8px;
+        }
+
+        .results-table td {
+            padding: 5px 4px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .results-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .subject-name {
+            font-weight: 600;
+            color: #1e293b;
+            text-align: left;
+            font-size: 9px;
+        }
+
+        .grade-cell {
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 12px;
+            display: inline-block;
+            font-size: 8px;
+        }
+
+        .grade-A { background: #d1fae5; color: #065f46; }
+        .grade-B { background: #dbeafe; color: #1e40af; }
+        .grade-C { background: #fed7aa; color: #92400e; }
+        .grade-D { background: #fee2e2; color: #991b1b; }
+        .grade-F { background: #fecaca; color: #7f1d1d; }
+
+        /* Performance Summary */
+        .performance-summary {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-bottom: 0;
+            padding: 10px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 10px;
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-label {
+            font-size: 8px;
+            color: #64748b;
+            margin-bottom: 3px;
+        }
+
+        .summary-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        /* Character/Conduct Section */
+        .character-section {
+            padding: 0 25px 12px 25px;
+        }
+
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .character-card {
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 10px;
+            border-left: 3px solid #667eea;
+        }
+
+        .character-title {
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 10px;
+        }
+
+        .conduct-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .conduct-item {
+            flex: 1;
+            min-width: 70px;
+        }
+
+        .conduct-label {
+            font-size: 8px;
+            color: #64748b;
+        }
+
+        .conduct-value {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 9px;
+        }
+
+        .rating-stars {
+            color: #fbbf24;
+            letter-spacing: 1px;
+            font-size: 8px;
+        }
+
+        /* Remarks and Signatures */
+        .remarks-section {
+            padding: 12px 25px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .remarks-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .remarks-box {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .remarks-box h4 {
+            color: #667eea;
+            margin-bottom: 6px;
+            font-size: 10px;
+        }
+
+        .remarks-text {
+            line-height: 1.4;
+            color: #475569;
+            font-size: 9px;
+        }
+
+        .signatures {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .signature-line {
+            text-align: center;
+        }
+
+        .signature-line .line {
+            width: 130px;
+            border-top: 1.5px solid #cbd5e1;
+            margin-bottom: 5px;
+        }
+
+        .signature-line .label {
+            font-size: 8px;
+            color: #64748b;
+        }
+
+        /* QR Code Section */
+        .qr-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .qr-code {
+            text-align: center;
+        }
+
+        .qr-code canvas {
+            width: 55px;
+            height: 55px;
+        }
+
+        .qr-text {
+            font-size: 7px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        /* Print Button */
+        .print-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .print-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        /* A4 Print Styles - Optimized for Single Page */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .print-btn {
+                display: none;
+            }
+            
+            .report-container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .report-card {
+                box-shadow: none;
+                margin: 0;
+                border-radius: 0;
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+            }
+            
+            .school-header::before {
+                display: none;
+            }
+            
+            /* A4 exact dimensions */
+            @page {
+                size: A4;
+                margin: 0.3cm;
+            }
+            
+            /* Force backgrounds to print */
+            .school-header,
+            .results-table th,
+            .grade-cell,
+            .key-color,
+            .character-card,
+            .remarks-box,
+            .performance-summary {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            /* Prevent page break inside the report */
+            .report-card {
+                page-break-after: avoid;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            
+            /* Ensure table fits without breaking */
+            .results-table {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            /* Compact spacing for print */
+            .school-header {
+                padding: 12px 20px;
+            }
+            
+            .student-profile {
+                padding: 10px 20px;
+            }
+            
+            .results-section {
+                padding: 10px 20px;
+            }
+            
+            .remarks-section {
+                padding: 10px 20px;
+            }
+            
+            .character-section {
+                padding: 0 20px 8px 20px;
+            }
+            
+            .info-field .value {
+                font-size: 10px;
+            }
+            
+            .summary-value {
+                font-size: 12px;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .student-info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .performance-summary {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            .student-photo {
+                text-align: center;
+            }
+            .photo-frame {
+                margin: 0 auto;
+            }
+            .student-info-grid {
+                grid-template-columns: 1fr;
+            }
+            .performance-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .remarks-grid {
+                grid-template-columns: 1fr;
+            }
+            .character-grid {
+                grid-template-columns: 1fr;
+            }
+            .grading-key {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <div class="report-card" id="reportCard">
+            <!-- School Header -->
+            <div class="school-header">
+                <div class="school-logo">
+                    <div class="logo-area">
+                        <div class="logo-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="school-title">
+                            <h1>EXCELLENCE INTERNATIONAL SCHOOL</h1>
+                            <p>Plot 123, Knowledge Avenue, Lagos, Nigeria | Tel: +234 123 456 7890</p>
+                            <p>Email: info@excellence.edu.ng | Website: www.excellence.edu.ng</p>
+                        </div>
+                    </div>
+                    <div class="academic-badge">
+                        <div class="label">Academic Session</div>
+                        <div class="value">2024/2025</div>
+                        <div class="label">Term</div>
+                        <div class="value">Second Term</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Profile -->
+            <div class="student-profile">
+                <div class="profile-grid">
+                    <div class="student-photo">
+                        <div class="photo-frame">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="photo-placeholder">Student Photo</div>
+                    </div>
+                    <div class="student-info-grid">
+                        <div class="info-field">
+                            <div class="label">Student Name</div>
+                            <div class="value">ADEBAYO, MICHAEL OLUWASEUN</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="label">Admission Number</div>
+                            <div class="value">EIS/2024/001</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="label">Class</div>
+                            <div class="value">SSS 3A</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="label">Section</div>
+                            <div class="value">Science</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="label">Gender</div>
+                            <div class="value">Male</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="label">Age</div>
+                            <div class="value">16 years</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="label">Date of Birth</div>
+                            <div class="value">March 15, 2008</div>
+                        </div>
+                        <div class="info-field">
+                            <div class="label">House</div>
+                            <div class="value">Blue House</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grading Key -->
+            <div class="key-section">
+                <div class="grading-key">
+                    <div class="key-item"><div class="key-color A"></div><span class="key-text">A: 70-100% (Excellent)</span></div>
+                    <div class="key-item"><div class="key-color B"></div><span class="key-text">B: 60-69% (Very Good)</span></div>
+                    <div class="key-item"><div class="key-color C"></div><span class="key-text">C: 50-59% (Good)</span></div>
+                    <div class="key-item"><div class="key-color D"></div><span class="key-text">D: 45-49% (Pass)</span></div>
+                    <div class="key-item"><div class="key-color F"></div><span class="key-text">F: 0-44% (Fail)</span></div>
+                    <div class="key-item"><i class="fas fa-chart-line"></i><span class="key-text">Highest: 93% | Lowest: 45% | Class Avg: 72%</span></div>
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="results-section">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">S/N</th>
+                            <th rowspan="2">SUBJECT</th>
+                            <th colspan="3">Continuous Assessment</th>
+                            <th rowspan="2">Total CA<br>(30)</th>
+                            <th rowspan="2">Exam<br>(70)</th>
+                            <th rowspan="2">Total<br>(100)</th>
+                            <th rowspan="2">Last Term<br>Score</th>
+                            <th rowspan="2">Grade</th>
+                            <th rowspan="2">Position</th>
+                            <th rowspan="2">Remark</th>
+                        </tr>
+                        <tr>
+                            <th>1st</th>
+                            <th>2nd</th>
+                            <th>3rd</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="subject-name">Mathematics</td><td>9</td><td>10</td><td>9</td><td>28</td><td>65</td><td>93</td><td>88</td><td><span class="grade-cell grade-A">A</span></td><td>1st</td><td>Excellent</td></tr>
+                        <tr><td>2</td><td class="subject-name">English Language</td><td>8</td><td>9</td><td>8</td><td>25</td><td>60</td><td>85</td><td>82</td><td><span class="grade-cell grade-A">A</span></td><td>3rd</td><td>Excellent</td></tr>
+                        <tr><td>3</td><td class="subject-name">Physics</td><td>9</td><td>9</td><td>8</td><td>26</td><td>58</td><td>84</td><td>79</td><td><span class="grade-cell grade-A">A</span></td><td>4th</td><td>Excellent</td></tr>
+                        <tr><td>4</td><td class="subject-name">Chemistry</td><td>8</td><td>8</td><td>8</td><td>24</td><td>55</td><td>79</td><td>75</td><td><span class="grade-cell grade-B">B</span></td><td>8th</td><td>Very Good</td></tr>
+                        <tr><td>5</td><td class="subject-name">Biology</td><td>9</td><td>9</td><td>9</td><td>27</td><td>60</td><td>87</td><td>83</td><td><span class="grade-cell grade-A">A</span></td><td>2nd</td><td>Excellent</td></tr>
+                        <tr><td>6</td><td class="subject-name">Further Mathematics</td><td>7</td><td>8</td><td>7</td><td>22</td><td>50</td><td>72</td><td>68</td><td><span class="grade-cell grade-B">B</span></td><td>12th</td><td>Good</td></tr>
+                        <tr><td>7</td><td class="subject-name">Economics</td><td>8</td><td>9</td><td>8</td><td>25</td><td>58</td><td>83</td><td>80</td><td><span class="grade-cell grade-A">A</span></td><td>5th</td><td>Excellent</td></tr>
+                        <tr><td>8</td><td class="subject-name">Government</td><td>8</td><td>8</td><td>8</td><td>24</td><td>55</td><td>79</td><td>76</td><td><span class="grade-cell grade-B">B</span></td><td>8th</td><td>Very Good</td></tr>
+                        <tr><td>9</td><td class="subject-name">Literature in English</td><td>9</td><td>9</td><td>8</td><td>26</td><td>59</td><td>85</td><td>81</td><td><span class="grade-cell grade-A">A</span></td><td>3rd</td><td>Excellent</td></tr>
+                        <tr><td>10</td><td class="subject-name">Data Processing</td><td>9</td><td>10</td><td>9</td><td>28</td><td>62</td><td>90</td><td>86</td><td><span class="grade-cell grade-A">A</span></td><td>2nd</td><td>Excellent</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- Performance Summary -->
+                <div class="performance-summary">
+                    <div class="summary-item">
+                        <div class="summary-label">Total Score</div>
+                        <div class="summary-value">837</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Average</div>
+                        <div class="summary-value">83.7%</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Seasonal Total</div>
+                        <div class="summary-value">1,245</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Seasonal Avg</div>
+                        <div class="summary-value">82.3%</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Class Position</div>
+                        <div class="summary-value">3rd / 45</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Overall Grade</div>
+                        <div class="summary-value">A</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Character/Conduct Section -->
+            <div class="character-section">
+                <div class="character-grid">
+                    <div class="character-card">
+                        <div class="character-title">
+                            <i class="fas fa-star"></i> Character & Conduct Assessment
+                        </div>
+                        <div class="conduct-items">
+                            <div class="conduct-item"><div class="conduct-label">Punctuality</div><div class="conduct-value rating-stars">★★★★☆</div></div>
+                            <div class="conduct-item"><div class="conduct-label">Attendance</div><div class="conduct-value rating-stars">★★★★★</div></div>
+                            <div class="conduct-item"><div class="conduct-label">Neatness</div><div class="conduct-value rating-stars">★★★★☆</div></div>
+                            <div class="conduct-item"><div class="conduct-label">Attentiveness</div><div class="conduct-value rating-stars">★★★★★</div></div>
+                            <div class="conduct-item"><div class="conduct-label">Participation</div><div class="conduct-value rating-stars">★★★★☆</div></div>
+                            <div class="conduct-item"><div class="conduct-label">Respectfulness</div><div class="conduct-value rating-stars">★★★★★</div></div>
+                        </div>
+                    </div>
+                    <div class="character-card">
+                        <div class="character-title">
+                            <i class="fas fa-clipboard-list"></i> Skills & Competencies
+                        </div>
+                        <div class="conduct-items">
+                            <div class="conduct-item"><div class="conduct-label">Leadership</div><div class="conduct-value">Excellent</div></div>
+                            <div class="conduct-item"><div class="conduct-label">Teamwork</div><div class="conduct-value">Very Good</div></div>
+                            <div class="conduct-item"><div class="conduct-label">Communication</div><div class="conduct-value">Excellent</div></div>
+                            <div class="conduct-item"><div class="conduct-label">Problem Solving</div><div class="conduct-value">Very Good</div></div>
+                            <div class="conduct-item"><div class="conduct-label">Creativity</div><div class="conduct-value">Excellent</div></div>
+                            <div class="conduct-item"><div class="conduct-label">Critical Thinking</div><div class="conduct-value">Very Good</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Remarks and Signatures -->
+            <div class="remarks-section">
+                <div class="remarks-grid">
+                    <div>
+                        <div class="remarks-box">
+                            <h4><i class="fas fa-comment-dots"></i> Teacher's Remarks</h4>
+                            <div class="remarks-text">
+                                Michael has demonstrated exceptional academic prowess this term. His performance in Mathematics and Science subjects is outstanding. 
+                                He actively participates in class discussions and shows great enthusiasm for learning. He should continue this momentum and 
+                                pay more attention to Further Mathematics. Recommended for the Principal's Honor Roll.
+                            </div>
+                        </div>
+                        <div class="remarks-box" style="margin-top: 8px;">
+                            <h4><i class="fas fa-chalkboard-user"></i> Principal's Remarks</h4>
+                            <div class="remarks-text">
+                                A brilliant and well-behaved student. Keep up the good work. Congratulations on your excellent results!
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="signatures">
+                            <div class="signature-line">
+                                <div class="line"></div>
+                                <div class="label">Class Teacher's Signature</div>
+                                <div class="label">Mrs. Adeola Williams</div>
+                            </div>
+                            <div class="signature-line">
+                                <div class="line"></div>
+                                <div class="label">Principal's Signature</div>
+                                <div class="label">Dr. Oluwaseun Adebayo</div>
+                            </div>
+                            <div class="signature-line">
+                                <div class="line"></div>
+                                <div class="label">Parent's/Guardian's Signature</div>
+                            </div>
+                        </div>
+                        <div class="qr-section">
+                            <div class="qr-code" id="qrcode"></div>
+                            <div class="qr-text">
+                                <i class="fas fa-qrcode"></i> Scan to verify<br>
+                                Result Authenticity
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="print-btn" onclick="window.print()">
+        <i class="fas fa-print"></i> Print / Download PDF
+    </button>
+
+    <script>
+        // Generate QR Code
+        const qrData = JSON.stringify({
+            student: "ADEBAYO, MICHAEL OLUWASEUN",
+            admission: "EIS/2024/001",
+            session: "2024/2025",
+            term: "Second Term",
+            verification: "EIS-VER-2024-001",
+            issueDate: new Date().toISOString()
+        });
+        
+        new QRCode(document.getElementById("qrcode"), {
+            text: qrData,
+            width: 55,
+            height: 55,
+            colorDark: "#1e293b",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    </script>
+</body>
+</html>

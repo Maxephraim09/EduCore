@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Student ID Card - Modern Template</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .id-card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        /* ID Card - Standard Size (85.6mm x 54mm) */
+        .id-card {
+            width: 540px;
+            height: 340px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .id-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+
+        /* Card Content */
+        .card-content {
+            display: flex;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Left Section - Photo Area */
+        .photo-section {
+            width: 35%;
+            background: rgba(255,255,255,0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 10px;
+            position: relative;
+        }
+
+        .photo-frame {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e2e8f0;
+        }
+
+        .photo-placeholder i {
+            font-size: 60px;
+            color: #94a3b8;
+        }
+
+        .photo-label {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        /* Right Section - Details Area */
+        .details-section {
+            width: 65%;
+            padding: 20px 15px;
+            color: white;
+            position: relative;
+        }
+
+        /* School Header */
+        .school-header {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .school-name {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+
+        .school-tagline {
+            font-size: 9px;
+            opacity: 0.8;
+        }
+
+        /* Student Details */
+        .student-details {
+            margin-bottom: 15px;
+        }
+
+        .detail-row {
+            margin-bottom: 10px;
+        }
+
+        .detail-label {
+            font-size: 8px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .detail-value {
+            font-size: 11px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        /* Additional Info */
+        .additional-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 8px 0;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .info-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 7px;
+            opacity: 0.7;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* Footer with QR and Signature */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .signature-area {
+            text-align: left;
+        }
+
+        .signature-line {
+            width: 100px;
+            border-top: 1px solid rgba(255,255,255,0.6);
+            margin-bottom: 5px;
+        }
+
+        .signature-text {
+            font-size: 7px;
+            opacity: 0.7;
+        }
+
+        .qr-code {
+            text-align: center;
+        }
+
+        .qr-code canvas {
+            width: 45px;
+            height: 45px;
+            background: white;
+            padding: 3px;
+            border-radius: 6px;
+        }
+
+        /* Card Number at Bottom */
+        .card-number {
+            position: absolute;
+            bottom: 8px;
+            right: 15px;
+            font-size: 8px;
+            opacity: 0.5;
+            font-family: monospace;
+        }
+
+        /* Watermark Pattern */
+        .watermark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255,255,255,0.02) 0px,
+                rgba(255,255,255,0.02) 2px,
+                transparent 2px,
+                transparent 8px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ID Type Badge */
+        .id-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Print Button */
+        .print-btn {
+            background: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            .print-btn {
+                display: none;
+            }
+            .id-card {
+                box-shadow: none;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
+            @page {
+                size: 85.6mm 54mm;
+                margin: 0;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        /* Sample Data Button */
+        .sample-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="id-card-container">
+        <!-- ID Card Front -->
+        <div class="id-card" id="idCard">
+            <div class="watermark"></div>
+            <div class="card-content">
+                <!-- Left: Photo Section -->
+                <div class="photo-section">
+                    <div class="photo-frame">
+                        <div class="photo-placeholder" id="studentPhoto">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                    </div>
+                    <div class="photo-label">ID PHOTO</div>
+                </div>
+
+                <!-- Right: Details Section -->
+                <div class="details-section">
+                    <div class="school-header">
+                        <div class="school-name">EXCELLENCE HIGH SCHOOL</div>
+                        <div class="school-tagline">Knowledge & Character</div>
+                    </div>
+
+                    <div class="student-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Student Name</div>
+                            <div class="detail-value" id="studentName">ADEBAYO MICHAEL</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Admission No</div>
+                            <div class="detail-value" id="admissionNo">EHS/2024/001</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Class / Section</div>
+                            <div class="detail-value" id="classSection">SSS 3A / Science</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Date of Birth</div>
+                            <div class="detail-value" id="dob">March 15, 2008</div>
+                        </div>
+                    </div>
+
+                    <div class="additional-info">
+                        <div class="info-item">
+                            <div class="info-label">Blood Group</div>
+                            <div class="info-value" id="bloodGroup">O+</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Genotype</div>
+                            <div class="info-value" id="genotype">AA</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Gender</div>
+                            <div class="info-value" id="gender">Male</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Valid Until</div>
+                            <div class="info-value" id="validUntil">2026-06-30</div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="signature-area">
+                            <div class="signature-line"></div>
+                            <div class="signature-text">Authorized Signature</div>
+                        </div>
+                        <div class="qr-code" id="qrcode"></div>
+                    </div>
+
+                    <div class="card-number" id="cardNumber">ID: EHS-2024-001</div>
+                    <div class="id-badge">STUDENT ID</div>
+                </div>
+            </div>
+        </div>
+
+        <button class="print-btn" onclick="window.print()">
+            <i class="fas fa-print"></i> Print ID Card
+        </button>
+        <button class="sample-btn" onclick="loadSampleData()">
+            <i class="fas fa-sync-alt"></i> Load Sample Data
+        </button>
+    </div>
+
+    <script>
+        // Function to update ID card with data
+        function updateIDCard(data) {
+            document.getElementById('studentName').textContent = data.name;
+            document.getElementById('admissionNo').textContent = data.admissionNo;
+            document.getElementById('classSection').textContent = data.classSection;
+            document.getElementById('dob').textContent = data.dob;
+            document.getElementById('bloodGroup').textContent = data.bloodGroup;
+            document.getElementById('genotype').textContent = data.genotype;
+            document.getElementById('gender').textContent = data.gender;
+            document.getElementById('validUntil').textContent = data.validUntil;
+            document.getElementById('cardNumber').textContent = data.cardNumber;
+            
+            // Update photo if provided
+            if (data.photo) {
+                document.getElementById('studentPhoto').innerHTML = `<img src="${data.photo}" style="width: 100%; height: 100%; object-fit: cover;">`;
+            }
+            
+            // Regenerate QR Code
+            generateQRCode(data);
+        }
+        
+        // Generate QR Code
+        function generateQRCode(data) {
+            const qrData = JSON.stringify({
+                id: data.cardNumber,
+                name: data.name,
+                admission: data.admissionNo,
+                class: data.classSection,
+                blood_group: data.bloodGroup,
+                genotype: data.genotype,
+                valid_until: data.validUntil
+            });
+            
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+            
+            new QRCode(qrContainer, {
+                text: qrData,
+                width: 45,
+                height: 45,
+                colorDark: "#1e293b",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+        
+        // Load sample data
+        function loadSampleData() {
+            const sampleData = {
+                name: "ADEBAYO MICHAEL OLUWASEUN",
+                admissionNo: "EHS/2024/001",
+                classSection: "SSS 3A / Science",
+                dob: "March 15, 2008",
+                bloodGroup: "O+",
+                genotype: "AA",
+                gender: "Male",
+                validUntil: "2026-06-30",
+                cardNumber: "EHS-2024-001",
+                photo: null
+            };
+            updateIDCard(sampleData);
+        }
+        
+        // Alternative data for different students
+        const studentData = [
+            {
+                name: "OKAFOR CHIAMAKA GRACE",
+                admissionNo: "EHS/2024/002",
+                classSection: "SSS 3A / Science",
+                dob: "May 22, 2007",
+                bloodGroup: "A+",
+                genotype: "AS",
+                gender: "Female",
+                validUntil: "2026-06-30",
+                cardNumber: "EHS-2024-002"
+            },
+            {
+                name: "EZE DAVID CHUKWUDI",
+                admissionNo: "EHS/2024/003",
+                classSection: "SSS 3B / Art",
+                dob: "December 10, 2008",
+                bloodGroup: "B+",
+                genotype: "AA",
+                gender: "Male",
+                validUntil: "2026-06-30",
+                cardNumber: "EHS-2024-003"
+            },
+            {
+                name: "BELLO FATIMA ABIMBOLA",
+                admissionNo: "EHS/2024/004",
+                classSection: "SSS 3B / Art",
+                dob: "January 5, 2008",
+                bloodGroup: "AB+",
+                genotype: "AA",
+                gender: "Female",
+                validUntil: "2026-06-30",
+                cardNumber: "EHS-2024-004"
+            }
+        ];
+        
+        let currentStudent = 0;
+        
+        // Function to cycle through students (optional)
+        function nextStudent() {
+            currentStudent = (currentStudent + 1) % studentData.length;
+            updateIDCard(studentData[currentStudent]);
+        }
+        
+        // Initialize with first student
+        updateIDCard(studentData[0]);
+        
+        // Optional: Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') {
+                nextStudent();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secondary School Admission Letter · SMS</title>
+  <!-- Font Awesome (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #e9edf4;
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .letter-card {
+      max-width: 1000px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 36px;
+      box-shadow: 0 25px 45px -10px rgba(0, 20, 30, 0.25);
+      padding: 2rem 2.5rem 2rem 2.5rem;
+      transition: 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    /* ========== HEADER : SCHOOL DETAILS ========== */
+    .school-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem 1.8rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 3px solid #0b2a4a;
+      margin-bottom: 1.8rem;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-box {
+      background: #0b2a4a;
+      width: 72px;
+      height: 72px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2.6rem;
+      box-shadow: 0 6px 12px rgba(11, 42, 74, 0.25);
+      flex-shrink: 0;
+    }
+
+    .school-title {
+      line-height: 1.2;
+    }
+
+    .school-title h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #0b2a4a;
+      letter-spacing: -0.3px;
+    }
+
+    .school-title .motto {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #2a547a;
+      background: #eef4fa;
+      padding: 0.2rem 1.2rem;
+      border-radius: 30px;
+      display: inline-block;
+      margin-top: 2px;
+      letter-spacing: 0.2px;
+    }
+
+    .header-right {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1.8rem;
+      background: #f6faff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      border: 1px solid #dde6f2;
+      font-size: 0.85rem;
+      color: #1d3f60;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .contact-item i {
+      color: #0b2a4a;
+      width: 1.1rem;
+      font-size: 0.9rem;
+    }
+
+    .contact-item a {
+      color: #0b2a4a;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dotted transparent;
+      transition: 0.1s;
+    }
+
+    .contact-item a:hover {
+      border-bottom: 1px dotted #0b2a4a;
+    }
+
+    /* ===== META (date, ref) ===== */
+    .letter-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      background: #f9fcff;
+      padding: 0.7rem 1.5rem;
+      border-radius: 60px;
+      border: 1px solid #e6eef9;
+      margin-bottom: 1.8rem;
+      font-size: 0.9rem;
+      color: #1a3f62;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .meta-item i {
+      color: #1f5a8e;
+    }
+
+    /* ===== STUDENT PANEL (photo + name + program) ===== */
+    .student-panel {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.8rem 2.5rem;
+      background: #f2f9ff;
+      padding: 1.2rem 2rem;
+      border-radius: 30px;
+      margin-bottom: 2rem;
+      border: 1px solid #d7e5f5;
+    }
+
+    .student-avatar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .avatar-placeholder {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #0b2a4a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2.6rem;
+      font-weight: 500;
+      box-shadow: 0 6px 12px rgba(11, 42, 74, 0.2);
+      border: 3px solid white;
+      flex-shrink: 0;
+    }
+
+    .student-name-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .student-name-block .name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0b2a4a;
+      line-height: 1.2;
+    }
+
+    .student-name-block .details {
+      font-size: 0.9rem;
+      color: #2a547a;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.2rem;
+      margin-top: 0.2rem;
+    }
+
+    .student-name-block .details i {
+      margin-right: 4px;
+      color: #1f5a8e;
+    }
+
+    .program-badge {
+      margin-left: auto;
+      background: #0b2a4a;
+      color: white;
+      padding: 0.5rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.4px;
+      box-shadow: 0 4px 10px rgba(11, 42, 74, 0.25);
+      white-space: nowrap;
+    }
+
+    .program-badge i {
+      margin-right: 6px;
+    }
+
+    /* ===== LETTER BODY ===== */
+    .letter-subject {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0b2a4a;
+      background: #e5effa;
+      padding: 0.3rem 1.5rem;
+      border-radius: 40px;
+      display: inline-block;
+      margin-bottom: 1.2rem;
+    }
+
+    .greeting {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #1c3f62;
+      margin-bottom: 0.4rem;
+    }
+
+    .greeting span {
+      font-weight: 700;
+      color: #0b2a4a;
+    }
+
+    .letter-body {
+      color: #1e3144;
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .letter-body p {
+      margin-bottom: 1.2rem;
+    }
+
+    .letter-body strong {
+      color: #0b2a4a;
+    }
+
+    .highlight-box {
+      background: #f2f8ff;
+      padding: 1rem 1.8rem;
+      border-radius: 24px;
+      border-left: 6px solid #0b2a4a;
+      margin: 1.4rem 0 1.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .highlight-box .info-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.8rem;
+    }
+
+    .highlight-box .info-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .highlight-box .info-item .label {
+      font-weight: 600;
+      color: #1a3e6f;
+    }
+
+    .highlight-box .info-item .value {
+      background: white;
+      padding: 0.1rem 1rem;
+      border-radius: 30px;
+      border: 1px solid #d0dfef;
+      font-weight: 500;
+    }
+
+    .signature-area {
+      margin-top: 2.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: end;
+      border-top: 2px solid #e2ebf5;
+      padding-top: 2rem;
+    }
+
+    .signature-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .signature-line {
+      font-weight: 300;
+      color: #2a4a6a;
+    }
+
+    .signature-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #0b2a4a;
+    }
+
+    .signature-title {
+      font-size: 0.85rem;
+      color: #3f6282;
+    }
+
+    .school-seal {
+      background: #eef4fa;
+      border-radius: 60px;
+      padding: 0.5rem 1.8rem;
+      font-weight: 600;
+      color: #0b2a4a;
+      border: 1px dashed #8aa9cc;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+    }
+
+    .school-seal i {
+      font-size: 1.2rem;
+    }
+
+    .letter-footer {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #4d6f8f;
+      border-top: 1px solid #e4ecf5;
+      padding-top: 1.2rem;
+    }
+
+    .footer-left i {
+      margin-right: 4px;
+      color: #1f5a8e;
+    }
+
+    .footer-right a {
+      color: #0b2a4a;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 0.8rem;
+      border-bottom: 1px dotted transparent;
+    }
+
+    .footer-right a:hover {
+      border-bottom: 1px dotted #0b2a4a;
+    }
+
+    /* ===== responsive ===== */
+    @media (max-width: 800px) {
+      .letter-card { padding: 1.5rem; }
+      .school-header { flex-direction: column; align-items: flex-start; }
+      .header-right { width: 100%; justify-content: flex-start; flex-wrap: wrap; }
+      .program-badge { margin-left: 0; align-self: flex-start; }
+      .student-panel { flex-direction: column; align-items: flex-start; }
+      .signature-area { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .letter-meta { flex-direction: column; gap: 0.3rem; align-items: flex-start; border-radius: 20px; }
+    }
+
+    @media (max-width: 500px) {
+      .header-left { flex-wrap: wrap; }
+      .school-title h1 { font-size: 1.4rem; }
+      .avatar-placeholder { width: 64px; height: 64px; font-size: 2rem; }
+      .student-name-block .name { font-size: 1.2rem; }
+    }
+
+    @media print {
+      body { background: white; padding: 0.3rem; }
+      .letter-card { box-shadow: none; border: 1px solid #ccc; }
+      .school-seal { background: #f0f0f0; }
+    }
+  </style>
+</head>
+<body>
+<div class="letter-card">
+
+  <!-- ========== SCHOOL HEADER with LOGO, NAME, CONTACT ========== -->
+  <div class="school-header">
+    <div class="header-left">
+      <div class="logo-box">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <div class="school-title">
+        <h1>🏫 Hillside Secondary</h1>
+        <span class="motto"><i class="fas fa-tree" style="margin-right: 6px;"></i> integrity · excellence · service</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="contact-item"><i class="fas fa-globe"></i> <a href="#">hillside.edu</a></span>
+      <span class="contact-item"><i class="fas fa-envelope"></i> <a href="mailto:admissions@hillside.edu">admissions@hillside.edu</a></span>
+      <span class="contact-item"><i class="fas fa-phone-alt"></i> +1 (555) 789-0123</span>
+      <span class="contact-item"><i class="fas fa-map-pin"></i> 2200 Ridge Rd, Green Valley, CA 94043</span>
+    </div>
+  </div>
+
+  <!-- ===== META (date, ref, application) ===== -->
+  <div class="letter-meta">
+    <div class="meta-item"><i class="far fa-calendar-alt"></i> <strong>Date:</strong> <span id="letterDate">July 6, 2026</span></div>
+    <div class="meta-item"><i class="far fa-file-alt"></i> <strong>Ref:</strong> ADM/2026/088</div>
+    <div class="meta-item"><i class="fas fa-id-card"></i> <strong>Application:</strong> #AP-9921</div>
+  </div>
+
+  <!-- ===== STUDENT PANEL : PHOTO + NAME + PROGRAM ===== -->
+  <div class="student-panel">
+    <div class="student-avatar">
+      <!-- Student photo placeholder (initials) – replace with <img> if needed -->
+      <div class="avatar-placeholder">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      <div class="student-name-block">
+        <span class="name" id="studentFullName">Olivia M. Rivera</span>
+        <div class="details">
+          <span><i class="fas fa-calendar-check"></i> DOB: 2009-09-22</span>
+          <span><i class="fas fa-id-badge"></i> Student ID: STU-2026-104</span>
+          <span><i class="fas fa-flag"></i> Form 4 · Alpha</span>
+        </div>
+      </div>
+    </div>
+    <div class="program-badge">
+      <i class="fas fa-book-open"></i> Secondary · Science Stream
+    </div>
+  </div>
+
+  <!-- ===== LETTER SUBJECT ===== -->
+  <div class="letter-subject">
+    <i class="fas fa-envelope-open-text" style="margin-right: 8px;"></i> Offer of Admission – Secondary School
+  </div>
+
+  <!-- ===== GREETING ===== -->
+  <div class="greeting">
+    <i class="fas fa-user-graduate" style="margin-right: 8px; color: #0b2a4a;"></i> Dear <span id="studentGreeting">Olivia Rivera</span>,
+  </div>
+
+  <!-- ===== LETTER BODY ===== -->
+  <div class="letter-body">
+    <p>
+      We are pleased to inform you that the Admissions Board of <strong>Hillside Secondary School</strong> has carefully reviewed your application, academic records, and entrance assessment. On behalf of the entire faculty and administration, I am delighted to offer you admission to <strong>Form 4 (Science Stream)</strong> for the academic year <strong>2026–2027</strong>.
+    </p>
+    <p>
+      Your performance in the entrance examination and interview demonstrated strong analytical skills, intellectual curiosity, and a commitment to community service — values that are at the core of our school’s mission. You have been selected among a competitive pool of applicants, and we believe you will thrive in our rigorous academic environment.
+    </p>
+
+    <!-- highlight box : admission details -->
+    <div class="highlight-box">
+      <div class="info-line">
+        <span class="info-item"><span class="label"><i class="fas fa-calendar-plus"></i> Term:</span> <span class="value">2026–2027</span></span>
+        <span class="info-item"><span class="label"><i class="fas fa-clock"></i> Start:</span> <span class="value">August 23, 2026</span></span>
+        <span class="info-item"><span class="label"><i class="fas fa-user-tie"></i> House:</span> <span class="value">Roosevelt</span></span>
+      </div>
+      <div style="font-weight: 500; color: #0b2a4a; background: white; padding: 0.2rem 1.2rem; border-radius: 30px; border: 1px solid #c0d7ed;">
+        <i class="fas fa-check-circle" style="color: #1f8b4c;"></i> Admission confirmed
+      </div>
+    </div>
+
+    <p>
+      Enclosed with this letter, you will find the enrollment package, which includes the school calendar, uniform code, student handbook, and medical forms. Please complete the online registration and submit the required documents by <strong>August 1, 2026</strong> to secure your place.
+    </p>
+    <p>
+      We also invite you to our <strong>New Student Orientation</strong> on <strong>August 20, 2026</strong> at 9:00 AM, where you will meet your teachers, classmates, and House mentor. This is a wonderful opportunity to get acquainted with our campus and settle into school life.
+    </p>
+    <p>
+      Should you have any questions, our Admissions Office is here to support you. You may reach us at <i class="fas fa-phone-alt" style="margin: 0 4px;"></i> +1 (555) 789-0123 or <i class="fas fa-envelope" style="margin: 0 4px;"></i> admissions@hillside.edu.
+    </p>
+    <p style="margin-top: 1rem;">
+      We are excited to welcome you to the Hillside family and look forward to watching you grow into a confident, compassionate, and accomplished young leader.
+    </p>
+  </div>
+
+  <!-- ===== SIGNATURE & SEAL ===== -->
+  <div class="signature-area">
+    <div class="signature-block">
+      <div class="signature-line"><i class="fas fa-pen-fancy" style="color: #0b2a4a;"></i> Yours sincerely,</div>
+      <div class="signature-name">Dr. Margaret K. Okonkwo</div>
+      <div class="signature-title">Principal · Hillside Secondary School</div>
+      <div style="margin-top: 6px; font-size: 0.8rem; color: #3f6282;">
+        <i class="far fa-clock"></i> Issued: <span id="issueDate">July 6, 2026</span>
+      </div>
+    </div>
+    <div class="school-seal">
+      <i class="fas fa-stamp"></i> <span>OFFICIAL · SCHOOL SEAL</span>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER with website, email, address ===== -->
+  <div class="letter-footer">
+    <div class="footer-left">
+      <i class="fas fa-map-pin"></i> 2200 Ridge Rd, Green Valley, CA 94043
+      <span style="margin: 0 0.5rem;">|</span>
+      <i class="fas fa-globe"></i> hillside.edu
+      <span style="margin: 0 0.5rem;">|</span>
+      <i class="fas fa-envelope"></i> admissions@hillside.edu
+    </div>
+    <div class="footer-right">
+      <span><i class="fas fa-phone-alt"></i> +1 (555) 789-0123</span>
+      <a href="#"><i class="fas fa-user-graduate"></i> portal</a>
+    </div>
+  </div>
+
+  <!-- small system note -->
+  <div style="margin-top: 1rem; font-size: 0.7rem; color: #8da3bb; text-align: center; border-top: 1px solid #e6eef9; padding-top: 0.6rem;">
+    <i class="fas fa-database"></i> School Management System · admission letter · secondary school template
+  </div>
+</div>
+
+<!-- dynamic date update -->
+<script>
+  (function() {
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formatted = now.toLocaleDateString('en-US', options);
+    document.querySelectorAll('#letterDate, #issueDate').forEach(el => el.textContent = formatted);
+
+    // example: student name sync (both places)
+    const studentName = "Olivia M. Rivera";
+    const greetingSpan = document.getElementById('studentGreeting');
+    const fullNameSpan = document.getElementById('studentFullName');
+    if (greetingSpan) greetingSpan.textContent = studentName;
+    if (fullNameSpan) fullNameSpan.textContent = studentName;
+  })();
+</script>
+</body>
+</html>
+```
