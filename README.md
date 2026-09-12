@@ -812,6 +812,7 @@ Contact Method	Details
 📄 RC Number	RC 9713678
 👨‍💻 Developer	Maxwell Ephraim Halilu
 </div>
+
 Reporting Issues
 If you encounter any issues or have feature requests, please contact us via:
 
