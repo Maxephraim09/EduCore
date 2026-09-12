@@ -1,1210 +1,852 @@
-## School Settings & Receipt Verification
+🎓 EduCore
+Financial Management System with Integrated Blog
+Developed by MGTechs Smart Innovations
 
-The application supports configurable school details that are shown on receipts and public pages. Set these via the admin Settings UI or seed values in the database (table: `system_settings`). Key settings:
+https://img.shields.io/badge/Laravel-10.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+https://img.shields.io/badge/PHP-8.1+-777BB4?style=for-the-badge&logo=php&logoColor=white
+https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white
+https://img.shields.io/badge/Bootstrap-5.1-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white
+https://img.shields.io/badge/License-Proprietary-red?style=for-the-badge
 
-- `school_name` — the display name used on receipts.
-- `school_tagline` — short tagline shown beneath the name.
-- `school_address` — postal address shown on receipts.
-- `school_phone` — contact phone number.
-- `school_email` — contact email.
-- `school_website` — optional website URL.
-- `school_logo_url` — absolute URL or path to the logo image. If not set, `public/assets/logo.svg` is used as a fallback.
+EduCore is a comprehensive, all-in-one financial management system built specifically for educational institutions. It combines powerful financial tools with a modern content management system, enabling schools to manage students, fees, employees, salaries, loans, expenses, assets, and blog content — all from a single, secure platform.
 
-To add a custom logo, place the image in `public/uploads/` or any public path and set `school_logo_url` to the URL (for example `/uploads/logo.png`).
+📋 Table of Contents
+About the Developer
 
-The payment receipt QR code links to a public verification page: `/verify/receipt/{id}`. Scanning it opens a verification page with minimal receipt details and a link to view the full receipt if needed.
+Features
 
-# Authentication and Role-Based Access Control (RBAC) Implementation
+System Architecture
 
-## What's Needed for Each Role
+Role-Based Access Control
 
-Based on your Financial Management System, here's the complete breakdown of what each role should access:
+Blog System
 
-### 1. **Super Admin**
-*Full system control with no restrictions*
+Installation
 
-**Access:**
-- ✅ All modules (Students, Fees, Employees, Salaries, Loans, Overdrafts, Expenses, Assets, Incomes)
-- ✅ All Reports (Financial, Fee Collection, Salary, P&L)
-- ✅ System Settings (Paystack, SMS, Email, School, Backup, Logs)
-- ✅ User Management (Create/Edit/Delete all users)
-- ✅ Role & Permission Management
-- ✅ System Configuration
-- ✅ View all data across the system
-- ✅ Backup & Restore operations
-- ✅ Audit Logs
+Configuration
 
-### 2. **Admin**
-*Day-to-day operational management*
+Default Users
 
-**Access:**
-- ✅ Students Management (CRUD operations)
-- ✅ Fee Payments (View, Collect, Record payments)
-- ✅ Fee Structure Management
-- ✅ Employees Management (CRUD operations)
-- ✅ Salary Processing (Process, View, Edit pending)
-- ✅ Staff Loans (Approve, View, Manage)
-- ✅ Staff Overdrafts (Approve, View, Manage)
-- ✅ Expenses Management (CRUD, Approve/Reject)
-- ✅ Assets Management (CRUD, View depreciation)
-- ✅ Other Incomes (CRUD)
-- ✅ All Reports
-- ❌ System Settings (View only, cannot modify)
-- ❌ User Management (Cannot create/edit/delete users)
-- ❌ Backup & Restore
+Database Schema
 
-### 3. **Accountant**
-*Financial operations focus*
+API Routes
 
-**Access:**
-- ✅ Fee Payments (Collect, View history, Generate receipts)
-- ✅ Fee Structure (View only, cannot edit)
-- ✅ Salary Processing (Process salaries, View history)
-- ✅ Staff Loans (Record payments, View loan status)
-- ✅ Staff Overdrafts (Record withdrawals/repayments, View status)
-- ✅ Expenses (Create, View, Submit for approval)
-- ✅ Other Incomes (Create, View)
-- ✅ Financial Reports (View all)
-- ❌ Students Management (View only basic info)
-- ❌ Employees Management (View only)
-- ❌ Assets Management (View only)
-- ❌ Cannot approve expenses (submit only)
-- ❌ Cannot modify fee structure
-- ❌ Cannot approve loans/overdrafts
+Receipt Verification
 
-### 4. **Teacher**
-*Academic staff with limited access*
+School Settings
 
-**Access:**
-- ✅ View assigned students (class-specific)
-- ✅ View student fee status (can see if paid but not amounts)
-- ✅ Submit expense requests (classroom materials, activities)
-- ✅ View own salary details
-- ✅ View own loan/overdraft status
-- ✅ View school announcements
-- ❌ Cannot process fee payments
-- ❌ Cannot manage other employees
-- ❌ Cannot access financial reports
-- ❌ Cannot manage system settings
+Support
 
-### 5. **Frontdesk**
-*Student and parent interaction focus*
+License
 
-**Access:**
-- ✅ Students Management (Create, View, Edit basic info)
-- ✅ Fee Payments (Collect payments, Print receipts)
-- ✅ View Fee Structure (for answering parent queries)
-- ✅ Generate student reports (fee status, attendance)
-- ✅ Parent communication
-- ❌ Cannot modify fee structure
-- ❌ Cannot process refunds without approval
-- ❌ Cannot access employee data
-- ❌ Cannot view salary information
-- ❌ Cannot access financial reports
+👨‍💻 About the Developer
+<div align="center">
+MGTechs Smart Innovations
+Building Smart Solutions for Modern Institutions
 
-### 6. **Parent**
-*View their child(ren)'s information only*
+Developer	Maxwell Ephraim Halilu
+Company	MGTechs Smart Innovations
+RC Number	RC 9713678
+Website	www.mgtechs.com.ng
+Email	mgtechs09@gmail.com
+Phone	+234 816 159 5906
+</div>
+✨ Features
+💰 Financial Management
+Module	Description
+Student Management	Complete CRUD operations for student records with class assignments
+Fee Payments	Collect payments, generate receipts, Paystack integration
+Employee Management	Staff records, departments, positions, and salaries
+Salary Processing	Monthly salary processing with approval workflow
+Staff Loans	Loan applications, approvals, and repayment tracking
+Staff Overdrafts	Overdraft management with withdrawal/repayment records
+Expense Tracking	Create, approve, and manage institutional expenses
+Asset Management	Track assets with automatic depreciation calculations
+Income Management	Record and categorize other income sources
+Financial Reports	Fee collection, salary, and P&L reports with exports
+📝 Blog System
+Feature	Description
+Category Management	Organize posts into customizable categories
+Post Creation	Rich text editor with tags and featured images
+Approval Workflow	Teachers submit, admins/frontdesk approve
+Comment System	Nested comments with moderation capabilities
+View Tracking	Analytics for post performance and engagement
+Tag System	Categorize content with searchable tags
+Public Blog	SEO-friendly public-facing blog pages
+Featured Posts	Highlight important announcements
+🔐 Security & Access Control
+Role-Based Access Control (RBAC) — 7 distinct roles with granular permissions
 
-**Access:**
-- ✅ View own child's profile
-- ✅ View child's fee payment history
-- ✅ View fee structure
-- ✅ Make online payments (via Paystack)
-- ✅ Download receipts
-- ✅ View child's academic progress (if available)
-- ✅ Submit queries/complaints
-- ❌ Cannot view other students' information
-- ❌ Cannot access financial data
-- ❌ Cannot access employee data
-- ❌ Cannot modify system data
+Permission Management — Database-driven permission system
 
-### 7. **Student**
-*View own information only*
+Activity Logging — Complete audit trail of all user actions
 
-**Access:**
-- ✅ View own profile
-- ✅ View own fee payment history
-- ✅ View own receipts
-- ❌ Cannot make payments (should use parent account)
-- ❌ Cannot view other students' information
-- ❌ Cannot modify any system data
+Session Management — Secure authentication with remember-me
 
-## Implementation Plan
+Receipt Verification — QR code-based public verification
 
-Now I'll implement the complete authentication system with these roles. Here's the structure:
+Password Reset — Secure email-based password recovery
 
-### Database Changes Needed:
+💳 Payment Integration
+Paystack Gateway — Secure online payments for fees
 
-1. **Add role column to users table**
-2. **Create student_user relationship table** (for parent-student linking)
-3. **Create permissions table and role_permission table**
-4. **Create activity_logs table** for audit trail
+Receipt Generation — PDF receipts with QR codes
 
-Let me create the complete implementation:
+Payment Verification — Public verification page for receipts
 
-### Step 1: Create Migration for Role and Permissions
+Payment History — Complete transaction records per student
 
-```bash
-php artisan make:migration add_role_and_permissions_tables
-```
+🏗 System Architecture
+text
+┌─────────────────────────────────────────────────────────────────┐
+│                        EduCore Platform                          │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │                    Presentation Layer                     │   │
+│  │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ │   │
+│  │  │ Admin  │ │ Public │ │ Parent │ │Student │ │Teacher │ │   │
+│  │  │Dashboard│ │ Blog   │ │ Portal │ │ Portal │ │ Portal │ │   │
+│  │  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                              │                                   │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │                    Application Layer                      │   │
+│  │  ┌────────────┐ ┌──────────┐ ┌────────┐ ┌────────────┐  │   │
+│  │  │Controllers │ │Middleware│ │Services│ │  Events    │  │   │
+│  │  └────────────┘ └──────────┘ └────────┘ └────────────┘  │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                              │                                   │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │                      Domain Layer                         │   │
+│  │  ┌────────┐ ┌────────────┐ ┌────────┐ ┌──────────────┐  │   │
+│  │  │ Models │ │Repositories│ │Policies│ │  Observers   │  │   │
+│  │  └────────┘ └────────────┘ └────────┘ └──────────────┘  │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                              │                                   │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │                  Infrastructure Layer                     │   │
+│  │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ │   │
+│  │  │ MySQL  │ │Paystack│ │  SMS   │ │ Email  │ │Storage │ │   │
+│  │  │Database│ │Gateway │ │Gateway │ │  SMTP  │ │ Local  │ │   │
+│  │  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘ │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+👥 Role-Based Access Control
+Role Hierarchy
+text
+┌─────────────────────────────────────────────────────────────────┐
+│                        SUPER ADMIN                               │
+│                    (Full System Control)                         │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌──────────┐  ┌────────────┐  ┌──────────┐  ┌──────────────┐  │
+│  │  ADMIN   │  │ ACCOUNTANT │  │  TEACHER │  │  FRONTDESK   │  │
+│  │          │  │            │  │          │  │              │  │
+│  │Operations│  │ Financial  │  │ Academic │  │  Student/    │  │
+│  │Management│  │ Operations │  │   Staff  │  │Parent Support│  │
+│  └──────────┘  └────────────┘  └──────────┘  └──────────────┘  │
+│                                                                  │
+│  ┌──────────┐  ┌────────────┐                                   │
+│  │  PARENT  │  │  STUDENT   │                                   │
+│  │          │  │            │                                   │
+│  │ View Own │  │  View Own  │                                   │
+│  │Children  │  │   Info     │                                   │
+│  └──────────┘  └────────────┘                                   │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+Role Descriptions
+Role	Description	Key Permissions
+Super Admin	Full system control with no restrictions	All modules, user management, settings, backups, audit logs
+Admin	Day-to-day operational management	Students, fees, employees, salaries, loans, overdrafts, expenses, assets, incomes, reports
+Accountant	Financial operations focus	Fee collection, salary processing, loan/overdraft recording, expense creation, financial reports
+Teacher	Academic staff with limited access	View assigned students, submit blog posts, expense requests, view own salary/loan
+Front Desk	Student and parent interaction focus	Student management, fee collection, blog categories, receipt printing, parent communication
+Parent	View their child(ren)'s information only	Child's profile, fee history, fee structure, online payments, receipts, queries
+Student	View own information only	Own profile, fee history, receipts
+Permission Matrix
+Permission	Super Admin	Admin	Accountant	Teacher	Frontdesk	Parent	Student
+View Students	✅	✅	✅	❌	✅	❌	❌
+Create Students	✅	✅	❌	❌	✅	❌	❌
+Edit Students	✅	✅	❌	❌	✅	❌	❌
+Delete Students	✅	✅	❌	❌	❌	❌	❌
+Collect Payments	✅	✅	✅	❌	✅	✅	❌
+View Fee Structure	✅	✅	✅	✅	✅	✅	❌
+Edit Fee Structure	✅	✅	❌	❌	❌	❌	❌
+Process Refunds	✅	✅	❌	❌	❌	❌	❌
+View Employees	✅	✅	✅	❌	❌	❌	❌
+Create Employees	✅	✅	❌	❌	❌	❌	❌
+Process Salaries	✅	✅	✅	❌	❌	❌	❌
+View Own Salary	✅	✅	✅	✅	✅	❌	❌
+Approve Loans	✅	✅	❌	❌	❌	❌	❌
+Approve Overdrafts	✅	✅	❌	❌	❌	❌	❌
+Approve Expenses	✅	✅	❌	❌	❌	❌	❌
+Create Expenses	✅	✅	✅	✅	❌	❌	❌
+Submit Blog Post	✅	✅	❌	✅	✅	❌	❌
+Approve Blog Post	✅	✅	❌	❌	✅	❌	❌
+Manage Blog Categories	✅	✅	❌	❌	✅	❌	❌
+View Financial Reports	✅	✅	✅	❌	❌	❌	❌
+Manage Users	✅	❌	❌	❌	❌	❌	❌
+System Settings	✅	👁	❌	❌	❌	❌	❌
+Backup & Restore	✅	❌	❌	❌	❌	❌	❌
+View Audit Logs	✅	❌	❌	❌	❌	❌	❌
+Legend: ✅ Full Access · 👁 View Only · ❌ No Access
 
-**database/migrations/xxxx_add_role_and_permissions_tables.php**:
+📝 Blog System
+Blog Features Overview
+text
+┌─────────────────────────────────────────────────────────────────┐
+│                        EduCore Blog                              │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐       │
+│  │  Categories  │───▶│    Posts     │───▶│   Comments   │       │
+│  │              │    │              │    │              │       │
+│  │ • Academic   │    │ • Title      │    │ • Nested     │       │
+│  │ • Events     │    │ • Content    │    │ • Moderated  │       │
+│  │ • News       │    │ • Image      │    │ • Approved   │       │
+│  │ • Sports     │    │ • Tags       │    │ • Replies    │       │
+│  └──────────────┘    └──────────────┘    └──────────────┘       │
+│         │                   │                   │               │
+│         │                   │                   │               │
+│         ▼                   ▼                   ▼               │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐       │
+│  │  Slug/SEO    │    │    Tags      │    │  Moderation  │       │
+│  │              │    │              │    │              │       │
+│  │ • URL Slug   │    │ • Searchable │    │ • Approve    │       │
+│  │ • Meta Title │    │ • Filterable │    │ • Reject     │       │
+│  │ • Meta Desc  │    │ • Related    │    │ • Delete     │       │
+│  └──────────────┘    └──────────────┘    └──────────────┘       │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │                     View Tracking                         │   │
+│  │  • Total Views  • Unique Visitors  • Reading Time        │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+Blog Workflow
+text
+ Teacher/Admin                    Admin/Frontdesk                    Public
+      │                                │                              │
+      │  ┌─────────────┐               │                              │
+      └─▶│ Create Post │               │                              │
+         │   (Draft)   │               │                              │
+         └──────┬──────┘               │                              │
+                │                      │                              │
+                ▼                      │                              │
+         ┌─────────────┐               │                              │
+         │   Submit    │               │                              │
+         │ for Approval│               │                              │
+         └──────┬──────┘               │                              │
+                │                      │                              │
+                ▼                      ▼                              │
+         ┌─────────────┐        ┌─────────────┐                       │
+         │   Pending   │───────▶│   Review    │                       │
+         │   Approval  │        │    Post     │                       │
+         └─────────────┘        └──────┬──────┘                       │
+                                       │                              │
+                           ┌───────────┴───────────┐                  │
+                           │                       │                  │
+                           ▼                       ▼                  │
+                    ┌─────────────┐         ┌─────────────┐          │
+                    │  Approved   │         │  Rejected   │          │
+                    │ (Published) │         │(With Reason)│          │
+                    └──────┬──────┘         └─────────────┘          │
+                           │                                         │
+                           ▼                                         │
+                    ┌─────────────┐         ┌─────────────┐          │
+                    │ Visible on  │────────▶│ Public Blog │◀─────────┘
+                    │ Public Blog │         │    Page     │
+                    └─────────────┘         └──────┬──────┘
+                                                   │
+                                                   ▼
+                                            ┌─────────────┐
+                                            │  Comments   │
+                                            │  & Views    │
+                                            └─────────────┘
+Blog Capabilities by Role
+Action	Super Admin	Admin	Frontdesk	Teacher	Public
+Create Category	✅	✅	✅	❌	❌
+Edit Category	✅	✅	✅	❌	❌
+Delete Category	✅	✅	✅	❌	❌
+Create Post	✅	✅	✅	✅	❌
+Edit Own Post	✅	✅	✅	✅	❌
+Edit Any Post	✅	✅	✅	❌	❌
+Submit for Approval	✅	✅	✅	✅	❌
+Approve Post	✅	✅	✅	❌	❌
+Reject Post	✅	✅	✅	❌	❌
+Delete Post	✅	✅	✅	❌	❌
+Manage Comments	✅	✅	✅	❌	❌
+Approve Comments	✅	✅	✅	❌	❌
+View Post Stats	✅	✅	✅	✅ (own)	❌
+Submit Comment	✅	✅	✅	✅	✅
+View Public Blog	✅	✅	✅	✅	✅
+🚀 Installation
+Prerequisites
+PHP >= 8.1
 
-```php
-<?php
+Composer >= 2.0
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+MySQL >= 8.0
 
-return new class extends Migration
-{
-    public function up()
-    {
-        // Add role to users table
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['super_admin', 'admin', 'accountant', 'teacher', 'frontdesk', 'parent', 'student'])
-                  ->default('student')->after('password');
-            $table->foreignId('student_id')->nullable()->constrained()->after('role');
-            $table->foreignId('parent_id')->nullable()->constrained('users')->after('student_id');
-            $table->boolean('is_verified')->default(false)->after('is_active');
-            $table->timestamp('last_login_at')->nullable()->after('remember_token');
-        });
+Node.js >= 16.x & NPM >= 8.x
 
-        // Permissions table
-        Schema::create('permissions', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
-            $table->string('module');
-            $table->text('description')->nullable();
-            $table->timestamps();
-        });
+Git
 
-        // Role permissions table
-        Schema::create('role_permissions', function (Blueprint $table) {
-            $table->id();
-            $table->enum('role', ['super_admin', 'admin', 'accountant', 'teacher', 'frontdesk', 'parent', 'student']);
-            $table->foreignId('permission_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
-            
-            $table->unique(['role', 'permission_id']);
-        });
+Step-by-Step Installation
+bash
+# 1. Clone the repository
+git clone https://github.com/mgtechs/educore.git
+cd educore
 
-        // Activity logs table
-        Schema::create('activity_logs', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->string('action');
-            $table->string('module');
-            $table->text('description')->nullable();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->json('old_data')->nullable();
-            $table->json('new_data')->nullable();
-            $table->timestamps();
-            
-            $table->index(['user_id', 'created_at']);
-            $table->index('module');
-        });
+# 2. Install PHP dependencies
+composer install
 
-        // Parent-Student relationship table (if not exists)
-        if (!Schema::hasTable('parent_students')) {
-            Schema::create('parent_students', function (Blueprint $table) {
-                $table->id();
-                $table->foreignId('parent_id')->constrained('users')->onDelete('cascade');
-                $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
-                $table->string('relationship')->nullable();
-                $table->boolean('is_primary')->default(false);
-                $table->timestamps();
-            });
-        }
-    }
+# 3. Install NPM dependencies
+npm install
 
-    public function down()
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['role', 'student_id', 'parent_id', 'is_verified', 'last_login_at']);
-        });
-        Schema::dropIfExists('role_permissions');
-        Schema::dropIfExists('permissions');
-        Schema::dropIfExists('activity_logs');
-        Schema::dropIfExists('parent_students');
-    }
-};
-```
+# 4. Copy environment file
+cp .env.example .env
 
-Run the migration:
-```bash
+# 5. Generate application key
+php artisan key:generate
+
+# 6. Configure your database in .env
+# DB_CONNECTION=mysql
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=educore
+# DB_USERNAME=root
+# DB_PASSWORD=
+
+# 7. Run migrations
 php artisan migrate
-```
 
-### Step 2: Create Permission Seeder
+# 8. Seed permissions and default data
+php artisan db:seed --class=PermissionSeeder
+php artisan db:seed --class=BlogSeeder
+php artisan db:seed --class=UserSeeder
 
-```bash
-php artisan make:seeder PermissionSeeder
-```
+# 9. Create storage link
+php artisan storage:link
 
-**database/seeders/PermissionSeeder.php**:
+# 10. Build assets
+npm run build
 
-```php
-<?php
+# 11. Start the server
+php artisan serve
+Quick Setup Script
+Create a file named setup.sh in the project root:
 
-namespace Database\Seeders;
+bash
+#!/bin/bash
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+# EduCore Setup Script
+# Developed by MGTechs Smart Innovations
 
-class PermissionSeeder extends Seeder
-{
-    public function run()
-    {
-        $permissions = [
-            // Student Management
-            ['name' => 'View Students', 'slug' => 'view-students', 'module' => 'students'],
-            ['name' => 'Create Students', 'slug' => 'create-students', 'module' => 'students'],
-            ['name' => 'Edit Students', 'slug' => 'edit-students', 'module' => 'students'],
-            ['name' => 'Delete Students', 'slug' => 'delete-students', 'module' => 'students'],
-            ['name' => 'View Own Student', 'slug' => 'view-own-student', 'module' => 'students'],
-            
-            // Fee Management
-            ['name' => 'View Fees', 'slug' => 'view-fees', 'module' => 'fees'],
-            ['name' => 'Collect Payments', 'slug' => 'collect-payments', 'module' => 'fees'],
-            ['name' => 'View Fee Structure', 'slug' => 'view-fee-structure', 'module' => 'fees'],
-            ['name' => 'Edit Fee Structure', 'slug' => 'edit-fee-structure', 'module' => 'fees'],
-            ['name' => 'Process Refunds', 'slug' => 'process-refunds', 'module' => 'fees'],
-            
-            // Employee Management
-            ['name' => 'View Employees', 'slug' => 'view-employees', 'module' => 'employees'],
-            ['name' => 'Create Employees', 'slug' => 'create-employees', 'module' => 'employees'],
-            ['name' => 'Edit Employees', 'slug' => 'edit-employees', 'module' => 'employees'],
-            ['name' => 'Delete Employees', 'slug' => 'delete-employees', 'module' => 'employees'],
-            
-            // Salary Management
-            ['name' => 'View Salaries', 'slug' => 'view-salaries', 'module' => 'salaries'],
-            ['name' => 'Process Salaries', 'slug' => 'process-salaries', 'module' => 'salaries'],
-            ['name' => 'View Own Salary', 'slug' => 'view-own-salary', 'module' => 'salaries'],
-            
-            // Loan Management
-            ['name' => 'View Loans', 'slug' => 'view-loans', 'module' => 'loans'],
-            ['name' => 'Approve Loans', 'slug' => 'approve-loans', 'module' => 'loans'],
-            ['name' => 'Record Loan Payments', 'slug' => 'record-loan-payments', 'module' => 'loans'],
-            ['name' => 'View Own Loan', 'slug' => 'view-own-loan', 'module' => 'loans'],
-            
-            // Overdraft Management
-            ['name' => 'View Overdrafts', 'slug' => 'view-overdrafts', 'module' => 'overdrafts'],
-            ['name' => 'Approve Overdrafts', 'slug' => 'approve-overdrafts', 'module' => 'overdrafts'],
-            ['name' => 'Record Overdraft Transactions', 'slug' => 'record-overdraft-transactions', 'module' => 'overdrafts'],
-            
-            // Expense Management
-            ['name' => 'View Expenses', 'slug' => 'view-expenses', 'module' => 'expenses'],
-            ['name' => 'Create Expenses', 'slug' => 'create-expenses', 'module' => 'expenses'],
-            ['name' => 'Approve Expenses', 'slug' => 'approve-expenses', 'module' => 'expenses'],
-            ['name' => 'Edit Expenses', 'slug' => 'edit-expenses', 'module' => 'expenses'],
-            
-            // Asset Management
-            ['name' => 'View Assets', 'slug' => 'view-assets', 'module' => 'assets'],
-            ['name' => 'Create Assets', 'slug' => 'create-assets', 'module' => 'assets'],
-            ['name' => 'Edit Assets', 'slug' => 'edit-assets', 'module' => 'assets'],
-            ['name' => 'Delete Assets', 'slug' => 'delete-assets', 'module' => 'assets'],
-            
-            // Income Management
-            ['name' => 'View Incomes', 'slug' => 'view-incomes', 'module' => 'incomes'],
-            ['name' => 'Create Incomes', 'slug' => 'create-incomes', 'module' => 'incomes'],
-            
-            // Reports
-            ['name' => 'View Financial Reports', 'slug' => 'view-financial-reports', 'module' => 'reports'],
-            ['name' => 'View Fee Reports', 'slug' => 'view-fee-reports', 'module' => 'reports'],
-            ['name' => 'View Salary Reports', 'slug' => 'view-salary-reports', 'module' => 'reports'],
-            ['name' => 'View P&L Reports', 'slug' => 'view-pl-reports', 'module' => 'reports'],
-            
-            // Settings
-            ['name' => 'View Settings', 'slug' => 'view-settings', 'module' => 'settings'],
-            ['name' => 'Edit Settings', 'slug' => 'edit-settings', 'module' => 'settings'],
-            ['name' => 'Manage Users', 'slug' => 'manage-users', 'module' => 'settings'],
-            ['name' => 'View Logs', 'slug' => 'view-logs', 'module' => 'settings'],
-            ['name' => 'Manage Backups', 'slug' => 'manage-backups', 'module' => 'settings'],
-        ];
+echo "🎓 Setting up EduCore..."
+echo "Developed by MGTechs Smart Innovations"
+echo "=========================================="
 
-        DB::table('permissions')->insert($permissions);
+# Install dependencies
+echo "📦 Installing PHP dependencies..."
+composer install
 
-        // Assign permissions to roles
-        $rolePermissions = [
-            'super_admin' => array_column($permissions, 'slug'),
-            'admin' => [
-                'view-students', 'create-students', 'edit-students',
-                'view-fees', 'collect-payments', 'view-fee-structure',
-                'view-employees', 'create-employees', 'edit-employees',
-                'view-salaries', 'process-salaries',
-                'view-loans', 'approve-loans', 'record-loan-payments',
-                'view-overdrafts', 'approve-overdrafts', 'record-overdraft-transactions',
-                'view-expenses', 'create-expenses', 'approve-expenses', 'edit-expenses',
-                'view-assets', 'create-assets', 'edit-assets',
-                'view-incomes', 'create-incomes',
-                'view-financial-reports', 'view-fee-reports', 'view-salary-reports', 'view-pl-reports',
-                'view-settings',
-            ],
-            'accountant' => [
-                'view-students',
-                'view-fees', 'collect-payments', 'view-fee-structure',
-                'view-employees',
-                'view-salaries', 'process-salaries',
-                'view-loans', 'record-loan-payments',
-                'view-overdrafts', 'record-overdraft-transactions',
-                'view-expenses', 'create-expenses',
-                'view-assets',
-                'view-incomes', 'create-incomes',
-                'view-financial-reports', 'view-fee-reports', 'view-salary-reports', 'view-pl-reports',
-            ],
-            'teacher' => [
-                'view-own-student',
-                'view-fee-structure',
-                'view-own-salary',
-                'view-own-loan',
-                'create-expenses',
-            ],
-            'frontdesk' => [
-                'view-students', 'create-students', 'edit-students',
-                'view-fees', 'collect-payments', 'view-fee-structure',
-                'view-fee-reports',
-            ],
-            'parent' => [
-                'view-own-student',
-                'view-fees', 'collect-payments', 'view-fee-structure',
-            ],
-            'student' => [
-                'view-own-student',
-                'view-fees',
-            ],
-        ];
+echo "📦 Installing NPM dependencies..."
+npm install
 
-        foreach ($rolePermissions as $role => $permissions) {
-            foreach ($permissions as $permissionSlug) {
-                $permissionId = DB::table('permissions')->where('slug', $permissionSlug)->value('id');
-                if ($permissionId) {
-                    DB::table('role_permissions')->insert([
-                        'role' => $role,
-                        'permission_id' => $permissionId,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
-                }
-            }
-        }
-    }
-}
-```
+# Environment setup
+echo "⚙️  Setting up environment..."
+cp .env.example .env
+php artisan key:generate
 
-### Step 3: Create User Model with Role Methods
+# Database setup
+echo "🗄️  Setting up database..."
+php artisan migrate:fresh
+php artisan db:seed --class=PermissionSeeder
+php artisan db:seed --class=BlogSeeder
+php artisan db:seed --class=UserSeeder
 
-Update `app/Models/User.php`:
+# Storage
+echo "🔗 Creating storage link..."
+php artisan storage:link
 
-```php
+# Build assets
+echo "🏗️  Building assets..."
+npm run build
+
+# Cache
+echo "⚡ Caching configuration..."
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+echo ""
+echo "✅ EduCore setup complete!"
+echo "=========================================="
+echo "Run 'php artisan serve' to start the server."
+echo ""
+echo "Support: mgtechs09@gmail.com"
+echo "Website: www.mgtechs.com.ng"
+echo "Phone: +234 816 159 5906"
+Make it executable and run:
+
+bash
+chmod +x setup.sh
+./setup.sh
+⚙️ Configuration
+Environment Variables
+env
+# ============================================
+# EduCore Configuration
+# Developed by MGTechs Smart Innovations
+# ============================================
+
+# Application
+APP_NAME="EduCore"
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+# Database
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=educore
+DB_USERNAME=root
+DB_PASSWORD=
+
+# Paystack Payment Gateway
+PAYSTACK_PUBLIC_KEY=pk_test_xxxxxxxxxxxx
+PAYSTACK_SECRET_KEY=sk_test_xxxxxxxxxxxx
+PAYSTACK_PAYMENT_URL=https://api.paystack.co
+
+# SMS Gateway (Twilio/Nexmo/Termii)
+SMS_PROVIDER=twilio
+SMS_API_KEY=your_sms_api_key
+SMS_SENDER_ID=EduCore
+
+# Email Configuration
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_username
+MAIL_PASSWORD=your_password
+MAIL_FROM_ADDRESS="noreply@educore.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+# Blog Settings
+BLOG_POSTS_PER_PAGE=12
+BLOG_COMMENTS_ENABLED=true
+BLOG_AUTO_APPROVE_COMMENTS=false
+BLOG_REQUIRE_EMAIL_VERIFICATION=true
+
+# School Settings
+SCHOOL_NAME="Your School Name"
+SCHOOL_TAGLINE="Excellence in Education"
+SCHOOL_ADDRESS="123 Education Street"
+SCHOOL_PHONE="+234 800 000 0000"
+SCHOOL_EMAIL="info@school.com"
+SCHOOL_WEBSITE="https://school.com"
+SCHOOL_LOGO_URL="/uploads/logo.png"
+School Settings via Admin UI
+Navigate to Settings → School Settings to configure:
+
+Setting Key	Description	Default
+school_name	Display name on receipts and public pages	"Your School Name"
+school_tagline	Short tagline shown beneath the name	"Excellence in Education"
+school_address	Postal address shown on receipts	-
+school_phone	Contact phone number	-
+school_email	Contact email address	-
+school_website	Optional website URL	-
+school_logo_url	Absolute URL or path to logo image	/assets/logo.svg
+Custom Logo Setup
+bash
+# Place logo in public/uploads/
+cp your-logo.png public/uploads/logo.png
+
+# Or set in database
+php artisan tinker
+>>> DB::table('system_settings')->updateOrInsert(
+...     ['key' => 'school_logo_url'],
+...     ['value' => '/uploads/logo.png']
+... );
+👤 Default Users
+After running the UserSeeder, these users are created:
+
+Role	Email	Password	Dashboard Redirect
+Super Admin	superadmin@educore.com	password	/dashboard
+Admin	admin@educore.com	password	/dashboard
+Accountant	accountant@educore.com	password	/fee-payments
+Teacher	teacher@educore.com	password	/students
+Front Desk	frontdesk@educore.com	password	/students
+Parent	parent@educore.com	password	/parent/dashboard
+Student	student@educore.com	password	/student/dashboard
+⚠️ Important: Change all default passwords immediately after installation!
+
+🗄 Database Schema
+Core Tables
+text
+users
+├── id
+├── name
+├── email
+├── password
+├── role (enum: super_admin, admin, accountant, teacher, frontdesk, parent, student)
+├── student_id (FK → students)
+├── parent_id (FK → users)
+├── is_active
+├── is_verified
+├── last_login_at
+└── timestamps
+
+students
+├── id
+├── admission_number
+├── first_name
+├── last_name
+├── class
+├── parent_name
+├── parent_phone
+├── parent_email
+├── is_active
+└── timestamps
+
+fee_payments
+├── id
+├── student_id (FK → students)
+├── amount
+├── payment_method
+├── reference
+├── status (pending, success, failed)
+├── paid_at
+└── timestamps
+
+employees
+├── id
+├── user_id (FK → users)
+├── employee_number
+├── position
+├── department
+├── salary
+└── timestamps
+
+expenses
+├── id
+├── title
+├── amount
+├── category
+├── status (pending, approved, rejected)
+├── created_by (FK → users)
+├── approved_by (FK → users)
+├── approved_at
+└── timestamps
+
+activity_logs
+├── id
+├── user_id (FK → users)
+├── action
+├── module
+├── description
+├── ip_address
+├── user_agent
+├── old_data (JSON)
+├── new_data (JSON)
+└── timestamps
+
+system_settings
+├── id
+├── key
+├── value
+├── group
+└── timestamps
+Blog Tables
+text
+blog_categories
+├── id
+├── name
+├── slug (unique)
+├── description
+├── is_active
+└── timestamps
+
+blog_posts
+├── id
+├── title
+├── slug (unique)
+├── excerpt
+├── content
+├── featured_image
+├── category_id (FK → blog_categories)
+├── author_id (FK → users)
+├── status (draft, pending, approved, rejected)
+├── rejection_reason
+├── approved_by (FK → users)
+├── approved_at
+├── published_at
+├── views_count
+├── is_featured
+├── meta_title
+├── meta_description
+└── timestamps
+
+blog_tags
+├── id
+├── name
+├── slug (unique)
+└── timestamps
+
+blog_post_tag
+├── post_id (FK → blog_posts)
+└── tag_id (FK → blog_tags)
+
+blog_comments
+├── id
+├── post_id (FK → blog_posts)
+├── parent_id (FK → blog_comments)
+├── user_id (FK → users)
+├── author_name
+├── author_email
+├── content
+├── is_approved
+└── timestamps
+
+blog_post_views
+├── id
+├── post_id (FK → blog_posts)
+├── ip_address
+├── user_agent
+└── viewed_at
+🛣 API Routes
+Authentication Routes
+php
+// Public routes
+GET     /login                  → Show login form
+POST    /login                  → Authenticate user
+POST    /logout                 → Logout user
+
+// Password reset
+GET     /password/reset         → Show reset form
+POST    /password/email         → Send reset link
+GET     /password/reset/{token} → Show reset form
+POST    /password/reset         → Reset password
+Blog Routes (Public)
+php
+GET     /blog                       → Blog index (paginated)
+GET     /blog/{slug}                → Single blog post
+GET     /blog/category/{slug}       → Posts by category
+GET     /blog/tag/{slug}            → Posts by tag
+POST    /blog/{post}/comment        → Submit comment
+GET     /blog/search                → Search posts
+Blog Routes (Admin/Frontdesk)
+php
+// Categories
+GET     /admin/blog/categories              → List categories
+GET     /admin/blog/categories/create       → Create form
+POST    /admin/blog/categories              → Store category
+GET     /admin/blog/categories/{id}/edit    → Edit form
+PUT     /admin/blog/categories/{id}         → Update category
+DELETE  /admin/blog/categories/{id}         → Delete category
+
+// Posts
+GET     /admin/blog/posts                   → List posts
+GET     /admin/blog/posts/create            → Create form
+POST    /admin/blog/posts                   → Store post
+GET     /admin/blog/posts/{id}/edit         → Edit form
+PUT     /admin/blog/posts/{id}              → Update post
+DELETE  /admin/blog/posts/{id}              → Delete post
+POST    /admin/blog/posts/{id}/approve      → Approve post
+POST    /admin/blog/posts/{id}/reject       → Reject post
+
+// Comments
+GET     /admin/blog/comments                → List comments
+POST    /admin/blog/comments/{id}/approve   → Approve comment
+DELETE  /admin/blog/comments/{id}           → Delete comment
+
+// Tags
+GET     /admin/blog/tags                    → List tags
+POST    /admin/blog/tags                    → Create tag
+DELETE  /admin/blog/tags/{id}               → Delete tag
+Blog Routes (Teacher)
+php
+GET     /teacher/blog/posts                 → List own posts
+GET     /teacher/blog/posts/create          → Create form
+POST    /teacher/blog/posts                 → Store post (pending)
+GET     /teacher/blog/posts/{id}/edit       → Edit form
+PUT     /teacher/blog/posts/{id}            → Update post
+DELETE  /teacher/blog/posts/{id}            → Delete draft
+GET     /teacher/blog/posts/{id}/stats      → View post stats
+Financial Routes
+php
+// Students
+GET     /students                           → List students
+GET     /students/create                    → Create form
+POST    /students                           → Store student
+GET     /students/{id}                      → Show student
+GET     /students/{id}/edit                 → Edit form
+PUT     /students/{id}                      → Update student
+DELETE  /students/{id}                      → Delete student
+
+// Fee Payments
+GET     /fee-payments                       → List payments
+GET     /fee-payments/create                → Payment form
+POST    /fee-payments/initialize            → Initialize Paystack
+GET     /fee-payments/callback              → Paystack callback
+GET     /fee-payments/receipt/{id}          → View receipt
+GET     /fee-payments/history/{studentId?}  → Payment history
+
+// Reports
+GET     /reports                            → Reports dashboard
+GET     /reports/fee-collection             → Fee collection report
+GET     /reports/salary                     → Salary report
+GET     /reports/profit-loss                → P&L report
+
+// Settings (Super Admin)
+GET     /settings                           → Settings dashboard
+POST    /settings/update-paystack           → Update Paystack keys
+POST    /settings/update-sms                → Update SMS settings
+POST    /settings/update-email              → Update Email settings
+POST    /settings/update-school             → Update School settings
+GET     /settings/backup                    → Backup database
+POST    /settings/restore                   → Restore database
+GET     /settings/logs                      → View activity logs
+Receipt Verification Routes
+php
+GET     /verify/receipt/{id}                → Public verification page
+GET     /verify/receipt/{id}/full           → Full receipt view
+🔍 Receipt Verification
+How It Works
+text
+┌─────────────────────────────────────────────────────────────────┐
+│                     Receipt Generation                           │
+│                                                                  │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐         │
+│  │  Payment    │───▶│  Generate   │───▶│  Embed QR   │         │
+│  │  Received   │    │  Receipt    │    │  Code       │         │
+│  └─────────────┘    └─────────────┘    └──────┬──────┘         │
+│                                                 │               │
+│                                                 ▼               │
+│                                          ┌─────────────┐        │
+│                                          │  QR links   │        │
+│                                          │  to /verify │        │
+│                                          │  /receipt/  │        │
+│                                          │  {id}       │        │
+│                                          └─────────────┘        │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    Verification Page                             │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │  ✅ Receipt Verified                                      │   │
+│  │                                                           │   │
+│  │  Student: John Doe                                        │   │
+│  │  Amount: ₦50,000.00                                       │   │
+│  │  Date: 2024-01-15                                         │   │
+│  │  Reference: PAY_abc123xyz                                 │   │
+│  │  Status: ✅ Paid                                          │   │
+│  │                                                           │   │
+│  │  [View Full Receipt]                                      │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+QR Code Generation
+php
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
+$verificationUrl = route('receipt.verify', $payment->id);
+$qrCode = QrCode::size(200)
+    ->format('svg')
+    ->generate($verificationUrl);
+🏫 School Settings
+Settings Model
+php
 <?php
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-
-class User extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable;
-
-    protected $fillable = [
-        'name', 'email', 'password', 'role', 'student_id', 'parent_id', 'is_active', 'is_verified'
-    ];
-
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'is_active' => 'boolean',
-        'is_verified' => 'boolean',
-        'last_login_at' => 'datetime',
-    ];
-
-    // Role constants
-    const ROLE_SUPER_ADMIN = 'super_admin';
-    const ROLE_ADMIN = 'admin';
-    const ROLE_ACCOUNTANT = 'accountant';
-    const ROLE_TEACHER = 'teacher';
-    const ROLE_FRONTDESK = 'frontdesk';
-    const ROLE_PARENT = 'parent';
-    const ROLE_STUDENT = 'student';
-
-    const ROLES = [
-        self::ROLE_SUPER_ADMIN => 'Super Admin',
-        self::ROLE_ADMIN => 'Admin',
-        self::ROLE_ACCOUNTANT => 'Accountant',
-        self::ROLE_TEACHER => 'Teacher',
-        self::ROLE_FRONTDESK => 'Front Desk',
-        self::ROLE_PARENT => 'Parent',
-        self::ROLE_STUDENT => 'Student',
-    ];
-
-    // Relationships
-    public function student()
-    {
-        return $this->belongsTo(Student::class);
-    }
-
-    public function parent()
-    {
-        return $this->belongsTo(User::class, 'parent_id');
-    }
-
-    public function children()
-    {
-        return $this->belongsToMany(Student::class, 'parent_students', 'parent_id', 'student_id');
-    }
-
-    public function activityLogs()
-    {
-        return $this->hasMany(ActivityLog::class);
-    }
-
-    // Role checking methods
-    public function isSuperAdmin()
-    {
-        return $this->role === self::ROLE_SUPER_ADMIN;
-    }
-
-    public function isAdmin()
-    {
-        return $this->role === self::ROLE_ADMIN || $this->isSuperAdmin();
-    }
-
-    public function isAccountant()
-    {
-        return $this->role === self::ROLE_ACCOUNTANT || $this->isAdmin();
-    }
-
-    public function isTeacher()
-    {
-        return $this->role === self::ROLE_TEACHER || $this->isAdmin();
-    }
-
-    public function isFrontDesk()
-    {
-        return $this->role === self::ROLE_FRONTDESK || $this->isAdmin();
-    }
-
-    public function isParent()
-    {
-        return $this->role === self::ROLE_PARENT;
-    }
-
-    public function isStudent()
-    {
-        return $this->role === self::ROLE_STUDENT;
-    }
-
-    public function hasRole($role)
-    {
-        if (is_array($role)) {
-            return in_array($this->role, $role);
-        }
-        return $this->role === $role || $this->isSuperAdmin();
-    }
-
-    public function hasPermission($permissionSlug)
-    {
-        if ($this->isSuperAdmin()) {
-            return true;
-        }
-
-        return DB::table('role_permissions')
-            ->where('role', $this->role)
-            ->whereHas('permission', function($q) use ($permissionSlug) {
-                $q->where('slug', $permissionSlug);
-            })
-            ->exists();
-    }
-
-    public function getRoleNameAttribute()
-    {
-        return self::ROLES[$this->role] ?? ucfirst($this->role);
-    }
-
-    public function canViewStudent($studentId)
-    {
-        if ($this->isAdmin() || $this->isAccountant() || $this->isFrontDesk()) {
-            return true;
-        }
-
-        if ($this->isTeacher()) {
-            // Teacher can view students in their class
-            $teacherClass = $this->employee->class ?? null;
-            $studentClass = Student::find($studentId)->class ?? null;
-            return $teacherClass === $studentClass;
-        }
-
-        if ($this->isParent()) {
-            return $this->children()->where('student_id', $studentId)->exists();
-        }
-
-        if ($this->isStudent()) {
-            return $this->student_id == $studentId;
-        }
-
-        return false;
-    }
-}
-```
-
-### Step 4: Create Activity Log Model
-
-```bash
-php artisan make:model ActivityLog
-```
-
-**app/Models/ActivityLog.php**:
-
-```php
-<?php
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ActivityLog extends Model
+class SystemSetting extends Model
 {
-    use HasFactory;
+    protected $fillable = ['key', 'value', 'group'];
 
-    protected $fillable = [
-        'user_id', 'action', 'module', 'description', 'ip_address', 
-        'user_agent', 'old_data', 'new_data'
-    ];
-
-    protected $casts = [
-        'old_data' => 'array',
-        'new_data' => 'array',
-    ];
-
-    public function user()
+    public static function get($key, $default = null)
     {
-        return $this->belongsTo(User::class);
+        return self::where('key', $key)->value('value') ?? $default;
     }
 
-    public static function log($action, $module, $description = null, $oldData = null, $newData = null)
+    public static function set($key, $value, $group = 'general')
     {
-        return self::create([
-            'user_id' => auth()->id(),
-            'action' => $action,
-            'module' => $module,
-            'description' => $description,
-            'ip_address' => request()->ip(),
-            'user_agent' => request()->userAgent(),
-            'old_data' => $oldData,
-            'new_data' => $newData,
-        ]);
+        return self::updateOrCreate(
+            ['key' => $key],
+            ['value' => $value, 'group' => $group]
+        );
+    }
+
+    public static function getSchoolSettings()
+    {
+        return [
+            'name' => self::get('school_name', config('app.name')),
+            'tagline' => self::get('school_tagline', 'Excellence in Education'),
+            'address' => self::get('school_address', ''),
+            'phone' => self::get('school_phone', ''),
+            'email' => self::get('school_email', ''),
+            'website' => self::get('school_website', ''),
+            'logo_url' => self::get('school_logo_url', '/assets/logo.svg'),
+        ];
     }
 }
-```
-
-### Step 5: Create Role Middleware
-
-```bash
-php artisan make:middleware CheckRole
-```
-
-**app/Http/Middleware/CheckRole.php**:
-
-```php
-<?php
-
-namespace App\Http\Middleware;
-
-use Closure;
-use Illuminate\Http\Request;
-
-class CheckRole
-{
-    public function handle(Request $request, Closure $next, ...$roles)
-    {
-        if (!auth()->check()) {
-            return redirect()->route('login');
-        }
-
-        if (!in_array(auth()->user()->role, $roles) && !auth()->user()->isSuperAdmin()) {
-            abort(403, 'Unauthorized access.');
-        }
-
-        return $next($request);
-    }
-}
-```
-
-**app/Http/Middleware/CheckPermission.php**:
-
-```bash
-php artisan make:middleware CheckPermission
-```
-
-```php
-<?php
-
-namespace App\Http\Middleware;
-
-use Closure;
-use Illuminate\Http\Request;
-
-class CheckPermission
-{
-    public function handle(Request $request, Closure $next, $permission)
-    {
-        if (!auth()->check()) {
-            return redirect()->route('login');
-        }
-
-        if (!auth()->user()->hasPermission($permission)) {
-            abort(403, 'You do not have permission to access this page.');
-        }
-
-        return $next($request);
-    }
-}
-```
-
-### Step 6: Register Middleware
-
-Update `app/Http/Kernel.php`:
-
-```php
-protected $routeMiddleware = [
-    // ... existing middleware
-    'role' => \App\Http\Middleware\CheckRole::class,
-    'permission' => \App\Http\Middleware\CheckPermission::class,
-];
-```
-
-### Step 7: Create Auth Controllers
-
-```bash
-php artisan make:controller Auth/LoginController
-php artisan make:controller Auth/RegisterController
-php artisan make:controller Auth/ForgotPasswordController
-php artisan make:controller Auth/ResetPasswordController
-php artisan make:controller UserController
-```
-
-**app/Http/Controllers/Auth/LoginController.php**:
-
-```php
-<?php
-
-namespace App\Http\Controllers\Auth;
-
-use App\Http\Controllers\Controller;
-use App\Models\ActivityLog;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-class LoginController extends Controller
-{
-    public function showLoginForm()
-    {
-        return view('auth.login');
-    }
-
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if (Auth::attempt($credentials, $request->remember)) {
-            $user = Auth::user();
-            
-            if (!$user->is_active) {
-                Auth::logout();
-                return back()->withErrors(['email' => 'Your account is deactivated.']);
-            }
-
-            // Update last login
-            $user->update(['last_login_at' => now()]);
-            
-            // Log activity
-            ActivityLog::log('login', 'auth', 'User logged in');
-
-            // Redirect based on role
-            if ($user->isSuperAdmin() || $user->isAdmin()) {
-                return redirect()->intended(route('dashboard'));
-            } elseif ($user->isAccountant()) {
-                return redirect()->intended(route('fee-payments.index'));
-            } elseif ($user->isTeacher()) {
-                return redirect()->intended(route('students.index'));
-            } elseif ($user->isFrontDesk()) {
-                return redirect()->intended(route('students.index'));
-            } elseif ($user->isParent()) {
-                return redirect()->intended(route('parent.dashboard'));
-            } elseif ($user->isStudent()) {
-                return redirect()->intended(route('student.dashboard'));
-            }
-            
-            return redirect()->intended(route('dashboard'));
-        }
-
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
-    }
-
-    public function logout(Request $request)
-    {
-        ActivityLog::log('logout', 'auth', 'User logged out');
-        
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/');
-    }
-}
-```
-
-**app/Http/Controllers/UserController.php**:
-
-```php
-<?php
-
-namespace App\Http\Controllers;
-
-use App\Models\User;
-use App\Models\Student;
-use App\Models\ActivityLog;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-
-class UserController extends Controller
-{
-    public function index()
-    {
-        $this->authorize('manage-users');
-        
-        $users = User::with('student')->orderBy('created_at', 'desc')->paginate(15);
-        $roles = User::ROLES;
-        
-        return view('users.index', compact('users', 'roles'));
-    }
-
-    public function create()
-    {
-        $this->authorize('manage-users');
-        
-        $roles = User::ROLES;
-        $students = Student::where('is_active', true)->get();
-        
-        return view('users.create', compact('roles', 'students'));
-    }
-
-    public function store(Request $request)
-    {
-        $this->authorize('manage-users');
-        
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|confirmed',
-            'role' => 'required|in:' . implode(',', array_keys(User::ROLES)),
-            'student_id' => 'required_if:role,student|exists:students,id',
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'student_id' => $request->role == 'student' ? $request->student_id : null,
-            'is_active' => true,
-            'is_verified' => true,
-        ]);
-
-        ActivityLog::log('create', 'users', "Created user: {$user->name}", null, $user->toArray());
-
-        return redirect()->route('users.index')
-            ->with('success', 'User created successfully!');
-    }
-
-    public function edit($id)
-    {
-        $this->authorize('manage-users');
-        
-        $user = User::findOrFail($id);
-        $roles = User::ROLES;
-        $students = Student::where('is_active', true)->get();
-        
-        return view('users.edit', compact('user', 'roles', 'students'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $this->authorize('manage-users');
-        
-        $user = User::findOrFail($id);
-        
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'role' => 'required|in:' . implode(',', array_keys(User::ROLES)),
-            'is_active' => 'boolean',
-        ]);
-
-        $oldData = $user->toArray();
-        
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => $request->role,
-            'is_active' => $request->is_active ?? $user->is_active,
-        ]);
-
-        if ($request->password) {
-            $request->validate(['password' => 'min:8|confirmed']);
-            $user->update(['password' => Hash::make($request->password)]);
-        }
-
-        ActivityLog::log('update', 'users', "Updated user: {$user->name}", $oldData, $user->toArray());
-
-        return redirect()->route('users.index')
-            ->with('success', 'User updated successfully!');
-    }
-
-    public function destroy($id)
-    {
-        $this->authorize('manage-users');
-        
-        $user = User::findOrFail($id);
-        
-        if ($user->id == auth()->id()) {
-            return back()->with('error', 'You cannot delete your own account.');
-        }
-        
-        $user->delete();
-        
-        ActivityLog::log('delete', 'users', "Deleted user: {$user->name}", $user->toArray(), null);
-
-        return redirect()->route('users.index')
-            ->with('success', 'User deleted successfully!');
-    }
-
-    public function activityLogs()
-    {
-        $this->authorize('view-logs');
-        
-        $logs = ActivityLog::with('user')->orderBy('created_at', 'desc')->paginate(50);
-        
-        return view('users.activity-logs', compact('logs'));
-    }
-}
-```
-
-### Step 8: Create Authentication Views
-
-**resources/views/auth/login.blade.php**:
-
-```blade
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Financial Management System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Poppins', sans-serif;
-        }
-        .login-card {
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            overflow: hidden;
-        }
-        .login-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        .login-body {
-            padding: 30px;
-            background: white;
-        }
-        .btn-login {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            padding: 12px;
-            font-weight: 600;
-        }
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-5">
-                <div class="card login-card">
-                    <div class="login-header">
-                        <i class="fas fa-chart-line fa-3x mb-3"></i>
-                        <h3>Financial Management System</h3>
-                        <p class="mb-0">Login to your account</p>
-                    </div>
-                    <div class="login-body">
-                        @if($errors->any())
-                            <div class="alert alert-danger">
-                                {{ $errors->first() }}
-                            </div>
-                        @endif
-                        
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="mb-3">
-                                <label class="form-label">Email Address</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" required autofocus>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Password</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                    <input type="password" name="password" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" name="remember" id="remember">
-                                <label class="form-check-label" for="remember">Remember Me</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-login w-100">
-                                <i class="fas fa-sign-in-alt me-2"></i> Login
-                            </button>
-                        </form>
-                        <hr class="my-4">
-                        <div class="text-center">
-                            <small class="text-muted">
-                                <i class="fas fa-info-circle"></i> 
-                                Demo credentials: admin@financialsystem.com / password
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-```
-
-### Step 9: Update Routes
-
-Update `routes/web.php`:
-
-```php
-<?php
-
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UserController;
-
-// Authentication Routes
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-// Protected Routes
-Route::middleware(['auth'])->group(function () {
-    
-    // Dashboard
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    
-    // User Management (Super Admin only)
-    Route::middleware(['role:super_admin'])->prefix('users')->name('users.')->group(function () {
-        Route::get('/', [UserController::class, 'index'])->name('index');
-        Route::get('/create', [UserController::class, 'create'])->name('create');
-        Route::post('/', [UserController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [UserController::class, 'update'])->name('update');
-        Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
-        Route::get('/activity-logs', [UserController::class, 'activityLogs'])->name('activity-logs');
-    });
-    
-    // Include all other module routes here with appropriate middleware
-    // Students - Admin, Accountant, Front Desk
-    Route::middleware(['permission:view-students'])->resource('students', StudentController::class);
-    
-    // Fee Payments - Admin, Accountant, Front Desk
-    Route::middleware(['permission:collect-payments'])->prefix('fee-payments')->name('fee-payments.')->group(function () {
-        Route::get('/', [FeePaymentController::class, 'index'])->name('index');
-        Route::get('/create', [FeePaymentController::class, 'create'])->name('create');
-        Route::post('/initialize', [FeePaymentController::class, 'initializePayment'])->name('initialize');
-        Route::get('/callback', [FeePaymentController::class, 'handleCallback'])->name('callback');
-        Route::get('/receipt/{id}', [FeePaymentController::class, 'showReceipt'])->name('receipt');
-        Route::get('/history/{studentId?}', [FeePaymentController::class, 'paymentHistory'])->name('history');
-    });
-    
-    // Expenses - All staff can create, only admin can approve
-    Route::middleware(['permission:view-expenses'])->resource('expenses', ExpenseController::class);
-    Route::middleware(['permission:approve-expenses'])->get('/expenses/{id}/approve', [ExpenseController::class, 'approve'])->name('expenses.approve');
-    
-    // Reports - Accountants and above
-    Route::middleware(['permission:view-financial-reports'])->prefix('reports')->name('reports.')->group(function () {
-        Route::get('/', [ReportController::class, 'index'])->name('index');
-        Route::get('/fee-collection', [ReportController::class, 'feeCollection'])->name('fee-collection');
-        Route::get('/salary', [ReportController::class, 'salaryReport'])->name('salary');
-        Route::get('/profit-loss', [ReportController::class, 'profitLoss'])->name('profit-loss');
-    });
-    
-    // Settings - Super Admin only
-    Route::middleware(['permission:edit-settings'])->prefix('settings')->name('settings.')->group(function () {
-        Route::get('/', [SettingsController::class, 'index'])->name('index');
-        Route::post('/update-paystack', [SettingsController::class, 'updatePaystackKeys'])->name('update-paystack');
-        Route::post('/update-sms', [SettingsController::class, 'updateSmsSettings'])->name('update-sms');
-        Route::post('/update-email', [SettingsController::class, 'updateEmailSettings'])->name('update-email');
-        Route::post('/update-school', [SettingsController::class, 'updateSchoolSettings'])->name('update-school');
-        Route::get('/backup', [SettingsController::class, 'backup'])->name('backup');
-        Route::post('/restore', [SettingsController::class, 'restore'])->name('restore');
-        Route::get('/logs', [SettingsController::class, 'logs'])->name('logs');
-    });
-});
-```
-
-### Step 10: Run Seeders
-
-```bash
-php artisan db:seed --class=PermissionSeeder
-```
-
-### Step 11: Create Default Users
-
-```bash
-php artisan tinker
-```
-
-```php
-// Create Super Admin
-DB::table('users')->insert([
-    'name' => 'Super Admin',
-    'email' => 'superadmin@financialsystem.com',
-    'password' => Hash::make('password'),
-    'role' => 'super_admin',
-    'is_active' => true,
-    'is_verified' => true,
-    'created_at' => now(),
-    'updated_at' => now(),
-]);
-
-// Create Admin
-DB::table('users')->insert([
-    'name' => 'Admin User',
-    'email' => 'admin@financialsystem.com',
-    'password' => Hash::make('password'),
-    'role' => 'admin',
-    'is_active' => true,
-    'is_verified' => true,
-    'created_at' => now(),
-    'updated_at' => now(),
-]);
-
-// Create Accountant
-DB::table('users')->insert([
-    'name' => 'Accountant User',
-    'email' => 'accountant@financialsystem.com',
-    'password' => Hash::make('password'),
-    'role' => 'accountant',
-    'is_active' => true,
-    'is_verified' => true,
-    'created_at' => now(),
-    'updated_at' => now(),
-]);
-
-// Create Teacher
-DB::table('users')->insert([
-    'name' => 'Teacher User',
-    'email' => 'teacher@financialsystem.com',
-    'password' => Hash::make('password'),
-    'role' => 'teacher',
-    'is_active' => true,
-    'is_verified' => true,
-    'created_at' => now(),
-    'updated_at' => now(),
-]);
-
-// Create Front Desk
-DB::table('users')->insert([
-    'name' => 'Front Desk User',
-    'email' => 'frontdesk@financialsystem.com',
-    'password' => Hash::make('password'),
-    'role' => 'frontdesk',
-    'is_active' => true,
-    'is_verified' => true,
-    'created_at' => now(),
-    'updated_at' => now(),
-]);
-
-echo "Default users created successfully!\n";
-exit;
-```
-
-### Step 12: Update Layout for Role-Based Menu
-
-Update the sidebar in `resources/views/layouts/app.blade.php` to show menus based on role:
-
-```blade
-@php
-    $user = Auth::user();
-@endphp
-
-@if($user->isAdmin() || $user->isAccountant() || $user->isFrontDesk())
-    <!-- Show Students menu -->
-@endif
-
-@if($user->isAdmin() || $user->isAccountant())
-    <!-- Show Financial menus -->
-@endif
-
-@if($user->isSuperAdmin())
-    <!-- Show User Management menu -->
-@endif
-```
-
-Now run:
-```bash
-php artisan migrate:fresh --seed
-php artisan serve
-```
-
-The complete authentication system with Role-Based Access Control is now implemented! Each role has specific permissions as outlined above.
-
-
-implemente a blog system ito the existing proect
-* admin and front dessk officer 
-- can create blog actegories
-- create a blog post
-- approve a blog post (post by teachers)
-- manage blog
-- comments
-- views
-- tags
-* teachers can 
-- submit blog post
-- view submited blog (can see the views and total comment if approved)
-
-crate a public blog page and a sinle blog page 
+🆘 Support
+<div align="center">
+Need Help?
+MGTechs Smart Innovations
+
+Contact Method	Details
+🌐 Website	www.mgtechs.com.ng
+📧 Email	mgtechs09@gmail.com
+📞 Phone	+234 816 159 5906
+📄 RC Number	RC 9713678
+👨‍💻 Developer	Maxwell Ephraim Halilu
+</div>
+Reporting Issues
+If you encounter any issues or have feature requests, please contact us via:
+
+Email: mgtechs09@gmail.com
+
+Phone: +234 816 159 5906
+
+Website: www.mgtechs.com.ng
+
+📜 License
+text
+Copyright © 2024 MGTechs Smart Innovations
+
+All rights reserved.
+
+This software is proprietary and confidential. 
+Unauthorized copying, distribution, or use of this software 
+via any medium is strictly prohibited.
+
+Developed by: Maxwell Ephraim Halilu
+Company: MGTechs Smart Innovations
+RC Number: RC 9713678
+Website: www.mgtechs.com.ng
+Email: mgtechs09@gmail.com
+Phone: +234 816 159 5906
+<div align="center">
+🎓 EduCore
+Empowering Educational Institutions with Smart Financial Management
+
+Built with ❤️ by MGTechs Smart Innovations
+
+https://img.shields.io/badge/Website-www.mgtechs.com.ng-blue?style=for-the-badge&logo=google-chrome&logoColor=white
+https://img.shields.io/badge/Email-mgtechs09@gmail.com-red?style=for-the-badge&logo=gmail&logoColor=white
+https://img.shields.io/badge/Phone-+234%2520816%2520159%25205906-green?style=for-the-badge&logo=whatsapp&logoColor=white
+
+© 2024 MGTechs Smart Innovations. All rights reserved.
+
+</div>
